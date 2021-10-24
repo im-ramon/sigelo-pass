@@ -33,20 +33,18 @@ flex-direction: row;
 width: 65%;
 height: 40px;
 margin-bottom: 23px;
-border-bottom-color: ${cores.color3};
-border-bottom-width: 3px;
-padding-bottom: 5px;
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;
-padding-top: 8px;
-background: ${'#00000050'};
+border-radius: 10px;
+border-width: 2px;
+border-style: solid;
+border-color: ${'#00000030'};
+background: ${'#00000015'};
 align-items: center;
 `;
 
 export const Input = styled.TextInput.attrs({
     placeholderTextColor: '#484848'
 })`
-color: ${cores.color7};
+color: ${'#000000'};
 width: 75%;
 height: 100%;
 text-align: left;
@@ -99,7 +97,7 @@ export const styles = StyleSheet.create({
         
     }, 
     textCheckbox: {
-        color: cores.color7+ '99',
+        color: '#000000',
     }, 
     checkboxArea: {
         marginTop: 15,

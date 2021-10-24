@@ -40,20 +40,13 @@ function AuthProvider({ children }) {
         setLoading(true)
         await firebase.auth().signInWithEmailAndPassword(email, password)
             .then(async (value) => {
-                let uid = value.user.uid;
-                await firebase.database().ref('users').child(uid).once('value')
-                    .then((snapshot) => {
-                        let data = {
-                            uid,
-                            nome: snapshot.val().nome,
-                            sobrenome: snapshot.val().sobrenome,
-                            tipoUser: snapshot.val().tipoUser,
-                            email: value.user.email,
-                        };
-                        setUser(data);
-                        keepConnected && storageUser(data)
-                        setLoading(false)
-                    })
+                let uid = { 
+                    userId: value.user.uid,
+                    nome: 'User test'
+                };
+                setUser(uid)
+                keepConnected && storageUser(uid)
+                setLoading(false)
             })
             .catch((error) => {
                 cathError(error)

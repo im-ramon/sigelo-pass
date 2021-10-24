@@ -3,16 +3,16 @@ import 'firebase/auth';
 import 'firebase/database';
 
 let firebaseConfig = {
-    apiKey: "AIzaSyA0OArJ2c_MKpnaFP72dKSGV2Tg4_YSqN8",
-    authDomain: "sigelo-050521.firebaseapp.com",
-    projectId: "sigelo-050521",
-    storageBucket: "sigelo-050521.appspot.com",
-    messagingSenderId: "828067272243",
-    appId: "1:828067272243:web:7beb8fc1ca25e7c6e63546",
-    measurementId: "G-XNB8XVXC2E"
-  };
+    apiKey: "AIzaSyAZ3Dh-ZqqJS1D-clidxADI7hinoetibwc",
+    authDomain: "sigelo-pass.firebaseapp.com",
+    projectId: "sigelo-pass",
+    storageBucket: "sigelo-pass.appspot.com",
+    messagingSenderId: "282139028582",
+    appId: "1:282139028582:web:a37ca817af2eee7483d1a7",
+    measurementId: "G-VVB2ZJFFD2"
+};
 
-if(!firebase.apps.length){
+if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 

@@ -1,12 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { ImageBackground, StyleSheet, TextInput, TouchableOpacity, CheckBox, View, Text, Alert } from 'react-native';
+import { ImageBackground, TouchableOpacity, CheckBox, View, Text, Alert } from 'react-native';
 import { Background, Container, Logo, AreaInput, Input, SubmitButton, SubmitText, Link, LinkText, styles } from '../../styles/styles';
 import minhasCores from '../../styles/colors'
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../../contexts/auth'
-import { color } from 'react-native-reanimated';
-import { LinearGradient } from 'expo-linear-gradient';
+import { AuthContext } from '../../contexts/auth';
 
 export default function SignIn() {
 
@@ -42,12 +40,12 @@ export default function SignIn() {
 
     return (
         <Background>
-            <ImageBackground source={require('../../assets/background.jpg')} style={styles.image}>
+            <ImageBackground source={require('../../assets/background-light.jpg')} style={styles.image}>
                 <Container>
                     <Logo source={require('../../assets/logo-1.png')} />
 
                     <AreaInput>
-                        <Ionicons name="person" size={20} color="#dedede" style={{ marginLeft: 5 }} />
+                        <Ionicons name="person" size={20} color="#000000" style={{ marginLeft: 5 }} />
                         <Input
                             placeholder="Digite seu e-mail"
                             autoCorrect={false}
@@ -60,7 +58,7 @@ export default function SignIn() {
                     </AreaInput>
 
                     <AreaInput >
-                        <Ionicons name="lock-closed" size={20} color="#dedede" style={{ marginLeft: 5 }} />
+                        <Ionicons name="lock-closed" size={20} color="#000000" style={{ marginLeft: 5 }} />
                         <Input
                             placeholder="Digite sua senha"
                             autoCorrect={false}
@@ -104,7 +102,7 @@ export default function SignIn() {
                     <Link onPress={() => {
                         navigation.navigate('SignUp')
                     }}>
-                        <LinkText style={{ color: '#ffffff35' }}>
+                        <LinkText style={{ color: '#000' }}>
                             Solicitar acesso ao aplicativo
                     </LinkText>
                     </Link>

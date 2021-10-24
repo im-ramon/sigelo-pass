@@ -45,7 +45,7 @@ export default function PassawordReset() {
         if (type == 'success') {
             Alert.alert(
                 `E-mail enviado`,
-                `Confira no seu e-mail o link para recuperar sua senha.\n`,
+                `Acesse seu e-mail e clique no link de recuperação de senha.\n`,
                 [
                     { text: "Continuar", onPress: () => navigation.navigate('SignIn') }
                 ],
@@ -67,7 +67,7 @@ export default function PassawordReset() {
 
     return (
         <Background>
-            <ImageBackground source={require('../../assets/background.jpg')} style={styles.image}>
+            <ImageBackground source={require('../../assets/background-light.jpg')} style={styles.image}>
                 <Container>
                     <Logo source={require('../../assets/logo-1.png')} />
 
