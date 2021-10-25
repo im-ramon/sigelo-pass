@@ -12,6 +12,7 @@ const cores = {
     warning: '#ffc107',
     info: '#17a2b8',
     light: '#dedede',
+    white: '#ffffff',
     black: '#121212',
     dark: '#121212',
 }

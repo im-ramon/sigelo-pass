@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ImageBackground, StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Background, cores } from '../../styles/styles';
 import { Ionicons, FontAwesome5, AntDesign } from '@expo/vector-icons';
@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/auth'
 import { AppContext } from '../../contexts/appContexts'
 import { LinearGradient } from 'expo-linear-gradient';
-import myCores from '../../styles/colors'
+import minhasCores from '../../styles/colors'
 import Svg, { Path, SvgXml } from "react-native-svg"
 
 export default function Home() {
@@ -15,6 +15,8 @@ export default function Home() {
 
     const { signOut, user, setLoading } = useContext(AuthContext);
     const { setPageName, setToday, background, setBackground } = useContext(AppContext);
+
+    const [eventType, setEventType] = useState('1');
 
 
     const navigateTo = (pageNameNav) => {
@@ -26,87 +28,128 @@ export default function Home() {
 
     return (
         <Background>
-            <ImageBackground source={require('../../assets/background-light.jpg')} style={style.bodyBackground}>
-                <View style={style.root}>
+            <LinearGradient colors={[minhasCores.color3, minhasCores.color4, minhasCores.color5]} style={style.linearGradient} />
 
-                    <View style={style.menu}>
-                        <TouchableOpacity style={style.menuItem} onPress={() => signOut()}>
-                            <Ionicons name="md-exit-outline" size={40} color={cores.color5} style={{ transform: [{ rotate: "180deg" }] }} />
-                        </TouchableOpacity>
+            <View style={style.header}>
+                <View style={style.menu}>
+                    <TouchableOpacity style={style.menuItem} onPress={() => signOut()}>
+                        <Ionicons name="md-exit-outline" size={40} color={minhasCores.light} style={{ transform: [{ rotate: "180deg" }] }} />
+                    </TouchableOpacity>
 
-                        <TouchableOpacity style={style.menuItem} onPress={() => { navigation.navigate('Conf') }}>
-                            <Ionicons name="information-circle-outline" size={40} color={cores.color5} />
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity style={style.menuItem} onPress={() => { navigation.navigate('Conf') }}>
+                        <Ionicons name="information-circle-outline" size={40} color={minhasCores.light} />
+                    </TouchableOpacity>
+                </View>
 
-                    <Text style={style.textWelcome}>Bem vindo, {user.nome}!</Text>
+                <Text style={style.textWelcome}>Bem vindo, {user.nome}!</Text>
+                {/* <Text  style={style.textType}>Tipo de tela</Text> */}
 
-                    <View style={style.sectionMaster}>
-                        <ScrollView horizontal={true} style={style.sectionScrollView}>
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('ScannerQR') }}>
-                                <AntDesign name="qrcode" size={48} color={cores.color3} />
+                <View style={style.toggleTypeEventArea}>
+                    <TouchableOpacity style={{ ...style.btnToggleTypeEventArea, backgroundColor: eventType === '0' ? minhasCores.color5 : '#ffffff10' }} onPress={() => { setEventType('0') }}>
+                        <Text style={style.textToggleTypeEventArea}>Todos</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ ...style.btnToggleTypeEventArea, backgroundColor: eventType === '1' ? minhasCores.color5 : '#ffffff10' }} onPress={() => { setEventType('1') }}>
+                        <Text style={style.textToggleTypeEventArea}>Evento</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ ...style.btnToggleTypeEventArea, backgroundColor: eventType === '2' ? minhasCores.color5 : '#ffffff10' }} onPress={() => { setEventType('2') }}>
+                        <Text style={style.textToggleTypeEventArea}>Cadastro</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            <View style={style.sectionMaster}>
+                <ScrollView style={style.sectionScrollView}>
+                    <View style={style.section}>
+                        {(eventType === '1' || eventType === '0') && (
+                            <TouchableOpacity style={style.section_btnLarge} onPress={() => { navigation.navigate('ScannerQR') }}>
+                                <View style={{...style.icon, backgroundColor: '#e5f6fc'}}>
+                                    <AntDesign name="qrcode" size={48} color={'#3fb5d2'} />
+                                </View>
                                 <Text style={style.section_btn_text}>Escanear adesivo</Text>
                             </TouchableOpacity>
+                        )}
 
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigateTo('expired') }} >
-                                <FontAwesome5 name="user-check" size={48} color={cores.color3} />
-                                <Text style={style.section_btn_text}>Confirmar presença</Text>
+                        {(eventType === '1' || eventType === '0') && (
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Profiles') }}>
+                                <View style={{...style.icon, backgroundColor: '#f0eaff'}}>
+                                    <FontAwesome5 name="clipboard-list" size={32} color={'#5e38ea'} />
+                                </View>
+                                <Text style={style.section_btn_text}>Convidados presentes</Text>
                             </TouchableOpacity>
+                        )}
 
+                        {(eventType === '1' || eventType === '0') && (
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigateTo('expired') }} >
+                                <View style={{...style.icon, backgroundColor: '#fdeff2'}}>
+                                    <FontAwesome5 name="user-check" size={32} color={'#ec6e82'} />
+                                </View>
+                                <Text style={style.section_btn_text}>Confirmar presenças</Text>
+                            </TouchableOpacity>
+                        )}
+
+                        {(eventType === '2' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Approver') }}>
-                                <FontAwesome5 name="users-cog" size={48} color={cores.color3} />
+                                <View style={{...style.icon, backgroundColor: '#fef5f0'}}>
+                                    <FontAwesome5 name="users-cog" size={32} color={'#f69b63'} />
+                                </View>
                                 <Text style={style.section_btn_text}>Gerenciar controladores</Text>
                             </TouchableOpacity>
+                        )}
 
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Profiles') }}>
-                                <FontAwesome5 name="clipboard-list" size={48} color={cores.color3} />
-                                <Text style={style.section_btn_text}>Gerar relação dos convidados presentes</Text>
+                        {(eventType === '2' || eventType === '0') && (
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigateTo('all') }}>
+                                <View style={{...style.icon, backgroundColor: '#f3f6fe'}}>
+                                    <FontAwesome5 name="user-cog" size={32} color={'#b66ce1'} />
+                                </View>
+                                <Text style={style.section_btn_text}>Gerenciar convidados</Text>
                             </TouchableOpacity>
-                        </ScrollView>
+                        )}
 
-                        <ScrollView horizontal={true} style={style.sectionScrollView}>
-                            <View style={style.section}>
-                                <TouchableOpacity style={style.section_btn} onPress={() => { navigateTo('all') }}>
-                                    <FontAwesome5 name="user-cog" size={48} color={cores.color3} />
-                                    <Text style={style.section_btn_text}>Gerenciar convidados</Text>
-                                </TouchableOpacity>
+                        {(eventType === '2' || eventType === '0') && (
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Register') }}>
+                                <View style={{...style.icon, backgroundColor: '#ebf7ff'}}>
+                                    <FontAwesome5 name="user-plus" size={32} color={'#4bc1f9'} />
+                                </View>
+                                <Text style={style.section_btn_text}>Adicionar convidado</Text>
+                            </TouchableOpacity>
+                        )}
 
-                                <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Register') }}>
-                                    <FontAwesome5 name="user-plus" size={48} color={cores.color3} />
-                                    <Text style={style.section_btn_text}>Adicionar convidado</Text>
-                                </TouchableOpacity>
+                        {(eventType === '2' || eventType === '0') && (
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('ExportAllQR') }}>
+                                <View style={{...style.icon, backgroundColor: '#ffd5d5'}}>
+                                    <FontAwesome5 name="file-export" size={32} color={'#bb0e0e'} />
+                                </View>
+                                <Text style={style.section_btn_text}>Exportar todos adesivos</Text>
+                            </TouchableOpacity>
+                        )}
 
-                                <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('ExportAllQR') }}>
-                                    <FontAwesome5 name="file-export" size={48} color={cores.color3} />
-                                    <Text style={style.section_btn_text}>Exportar todos adesivos</Text>
-                                </TouchableOpacity>
+                        {(eventType === '2' || eventType === '0') && (
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Approver') }}>
+                                <View style={{...style.icon, backgroundColor: '#f8f8c4'}}>
+                                    <FontAwesome5 name="users-cog" size={32} color={'#999901'} />
+                                </View>
+                                <Text style={style.section_btn_text}>Gerenciar controladores</Text>
+                            </TouchableOpacity>
+                        )}
 
-                                <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Approver') }}>
-                                    <FontAwesome5 name="users-cog" size={48} color={cores.color3} />
-                                    <Text style={style.section_btn_text}>Gerenciar controladores</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Profiles') }}>
-                                    <FontAwesome5 name="clipboard-list" size={48} color={cores.color3} />
-                                    <Text style={style.section_btn_text}>Gerar relação dos convidados presentes</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </ScrollView>
                     </View>
-                </View>
-            </ImageBackground>
+                </ScrollView>
+            </View>
+
+
         </Background>
     );
 }
 
 const style = StyleSheet.create({
-    root: {
-        flex: 1,
+    header: {
+        flex: 4,
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
         height: '100%',
         marginTop: 30,
+        marginBottom: 30,
     },
     menu: {
         flex: 1,
@@ -117,12 +160,10 @@ const style = StyleSheet.create({
         marginBottom: 10,
     },
     menuItem: {
-        backgroundColor: `${myCores.light}05`,
-        borderRadius: 10,
+        backgroundColor: `${minhasCores.light}05`,
+        borderRadius: 25,
         width: 70,
         height: 70,
-        borderWidth: 5,
-        borderColor: '#00000010',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -133,14 +174,49 @@ const style = StyleSheet.create({
         flex: 1,
     },
     sectionMaster: {
-        flex: 10,
-        backgroundColor: '#ffffff05',
+        flex: 12,
+        backgroundColor: '#fff',
         width: '100%',
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
         flexDirection: 'column',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         alignItems: 'center',
         paddingTop: 30,
+        paddingLeft: 5,
+    },
+    typeEvent: {
+        flex: 1,
+
+    },
+    toggleTypeEventArea: {
+        borderColor: '#ffffff50',
+        borderWidth: 2,
+        borderStyle: 'dashed',
+        height: 100,
+        width: '75%',
+        borderRadius: 30,
+        // flex: 1,
+        justifyContent: 'space-around',
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        marginTop: 8,
+        position: 'relative',
+        top: 66,
+        padding: 10,
+    },
+    btnToggleTypeEventArea: {
+        width: '32%',
+        height: 45,
+        borderRadius: 15,
+        justifyContent: 'center',
+        borderWidth: 2,
+        borderColor: '#ffffff30'
+    },
+    textToggleTypeEventArea: {
+        color: minhasCores.white,
+        textAlign: 'center',
     },
     section: {
         flex: 1,
@@ -151,6 +227,7 @@ const style = StyleSheet.create({
     },
     bodyBackground: {
         flex: 1,
+        borderRadius: 50,
         justifyContent: "center",
         alignItems: 'center',
         width: '100%',
@@ -158,66 +235,80 @@ const style = StyleSheet.create({
         resizeMode: 'cover',
     },
     textWelcome: {
-        flex: 1,
-        color: `${cores.color7}`,
+        flex: 2,
+        color: minhasCores.white,
         fontSize: 26,
+        height: 55,
+        width: '85%',
+        textAlign: 'center',
+        position: 'relative',
+        top: 35,
     },
-    headerMenu: {
+    textType: {
         color: `${cores.color7}`,
-        transform: [{ translateY: 25 }],
-        position: 'absolute',
-        top: 133,
-        width: 200,
-        height: 60,
-        borderRadius: 25,
-        zIndex: 1,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: `${cores.color3}`,
-        borderColor: `${myCores.black}`,
-        borderWidth: 10,
-    },
-    textHeaderMenu: {
-        color: `${myCores.light}`,
-        fontWeight: '900',
-        fontSize: 22,
+        fontSize: 16,
     },
     section_btn: {
-        borderColor: `${cores.color3}30`,
-        borderWidth: 2.5,
-        marginBottom: 30,
-        backgroundColor: `${cores.color1}`,
         width: 160,
         height: 160,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        padding: 15,
-    },
-    section_btnLarge: {
-        borderColor: `${cores.color3}30`,
+        borderColor: '#d1d1d1',
         borderWidth: 2.5,
         marginBottom: 30,
-        backgroundColor: `${cores.color1}`,
-        width: (180 * 2) + 30,
-        height: 180 / 1.61803,
+        backgroundColor: minhasCores.white,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
+        borderRadius: 25,
         padding: 15,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+        elevation: 12,
+    },
+    section_btnLarge: {
+        width: (180 * 2),
+        height: 180 / 1.61803,
+        borderColor: '#d1d1d1',
+        borderWidth: 2.5,
+        marginBottom: 30,
+        backgroundColor: minhasCores.white,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 25,
+        padding: 15,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+        elevation: 12,
     },
     section_btn_text: {
-        color: `${cores.color7}`,
+        color: minhasCores.dark,
         textAlign: 'center',
         fontSize: 14,
         fontWeight: '100',
+        marginTop: 6,
     },
     linearGradient: {
         position: 'absolute',
         left: 0,
         right: 0,
         top: 0,
-        height: "100%",
+        height: "50%",
     },
+    icon: {
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 70,
+        width: 70,
+        // borderWidth: 2,
+        // borderColor: '#ffffff'
+    }
 });
