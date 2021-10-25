@@ -3,10 +3,9 @@ import { View, Text, ImageBackground, StyleSheet, Alert, ActivityIndicator } fro
 import { AreaInput, Background, Container, Input, Logo, SubmitButton, SubmitText, Link, styles } from '../../styles/styles';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import colors from '../../styles/colors';
+import minhasCores from '../../styles/colors';
 import { AuthContext } from '../../contexts/auth';
 import { Picker } from '@react-native-picker/picker';
-import cores from '../../styles/colors'
 import firebase from '../../services/firebaseConnection'
 
 export default function PassawordReset() {
@@ -72,10 +71,10 @@ export default function PassawordReset() {
                     <Logo source={require('../../assets/logo-1.png')} />
 
                     <Text style={style.textHeader}>Recuperar senha</Text>
-                    <Text style={{...style.textHeader, fontSize: 13}}>Digite o e-mail da conta que deseja recuperar a senha:</Text>
+                    <Text style={{...style.textHeader2, fontSize: 13}}>Digite o e-mail da conta que deseja recuperar a senha:</Text>
 
                     <AreaInput>
-                        <Ionicons name="mail" size={20} color="#dedede" style={{ marginLeft: 5 }} />
+                        <Ionicons name="mail" size={20} color={minhasCores.color5} style={{ marginLeft: 5 }} />
                         <Input
                             placeholder="Email"
                             autoCorrect={false}
@@ -85,14 +84,14 @@ export default function PassawordReset() {
                             autoFocus={true}
                             onChangeText={text => setEmailUser(text)}
                         />
-                        <Ionicons name={!validacaoEmail.test(emailUser) ? "close" : "checkmark"} size={20} color={emailUser === '' ? '#00000000' : (!validacaoEmail.test(emailUser) ? cores.danger : cores.success)} />
+                        <Ionicons name={!validacaoEmail.test(emailUser) ? "close" : "checkmark"} size={20} color={emailUser === '' ? '#00000000' : (!validacaoEmail.test(emailUser) ? minhasCores.danger : minhasCores.success)} />
                     </AreaInput>
 
                     {loading ?
-                        (<ActivityIndicator color={cores.color3} size={45} />)
+                        (<ActivityIndicator color={minhasCores.color3} size={45} />)
                         :
                         (
-                            <SubmitButton style={{ borderRadius: 10 }} onPress={() => {
+                            <SubmitButton onPress={() => {
                                 if (validacaoEmail.test(emailUser)) {
                                     resetEmail(emailUser)
                                 } else {
@@ -121,10 +120,18 @@ const style = StyleSheet.create({
         textAlign: 'center',
     },
     textHeader: {
-        color: colors.light,
+        color: minhasCores.color1,
+        fontSize: 20,
+        marginBottom: 10,
+        marginTop: 24,
+        width: '80%',
+        textAlign: 'center'
+    },
+    textHeader2: {
+        color: minhasCores.color1,
         fontSize: 20,
         marginBottom: 30,
-        marginTop: -20,
+        marginTop: 0,
         width: '80%',
         textAlign: 'center'
     },

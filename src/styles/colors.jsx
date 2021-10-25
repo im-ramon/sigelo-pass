@@ -1,10 +1,10 @@
 const cores = {
     color1: "#121212",
     color2: "#011126",
-    color3: "#3C74A6",
-    color4: "#73AABF",
-    color5: "#F27405",
-    color6: "#F24405",
+    color3: "#A05FF9",
+    color4: "#837CFA",
+    color5: "#592E83",
+    color6: "#230C33",
     color7: "#e1e1e1",
 
     success: '#28a745',
@@ -12,7 +12,8 @@ const cores = {
     warning: '#ffc107',
     info: '#17a2b8',
     light: '#dedede',
-    black: '#121212'
+    black: '#121212',
+    dark: '#121212',
 }
 
 export default cores;

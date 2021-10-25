@@ -16,7 +16,7 @@ export default function App() {
       <AuthProvider>
         <Routes />
       </AuthProvider>
-      <StatusBar style="inverted" />
+      <StatusBar />
     </NavigationContainer>
   );
 }

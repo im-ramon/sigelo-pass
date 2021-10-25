@@ -3,7 +3,7 @@ import { View, Text, ImageBackground, StyleSheet, Alert, ActivityIndicator } fro
 import { AreaInput, Background, Container, Input, Logo, SubmitButton, SubmitText, Link, LinkText, styles } from '../../styles/styles';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import colors from '../../styles/colors';
+import minhasCores from '../../styles/colors';
 import { AuthContext } from '../../contexts/auth';
 import { Picker } from '@react-native-picker/picker';
 import cores from '../../styles/colors'
@@ -18,6 +18,7 @@ export default function SignUp() {
     const [sobrenomeUser, setSobrenomeUser] = useState('')
     const [emailUser, setEmailUser] = useState('')
     const [senhaUser, setSenhaUser] = useState('')
+    const [repeatSenhaUser, setRepeatSenhaUser] = useState('')
     const [senhaAdm, setSenhaAdm] = useState('')
     const [tipoUser, setTipoUser] = useState('99')
 
@@ -52,16 +53,16 @@ export default function SignUp() {
 
     return (
         <Background>
-            <ImageBackground source={require('../../assets/background.jpg')} style={styles.image}>
+            <ImageBackground source={require('../../assets/background-light.jpg')} style={styles.image}>
                 <Container>
                     <Logo source={require('../../assets/logo-1.png')} />
 
-                    <Text style={style.textHeader}>Cadastrar usuários</Text>
+                    <Text style={style.textHeader}>Preencha o formulário para cadastra-se</Text>
                     
                     <AreaInput>
-                        <Ionicons name="person" size={20} color="#dedede" style={{ marginLeft: 5 }} />
+                        <Ionicons name="person" size={20} color={minhasCores.color5} style={{ marginLeft: 5 }} />
                         <Input
-                            placeholder="Primeiro nome"
+                            placeholder="Nome"
                             autoCorrect={false}
                             autoCapitalize="none"
                             value={nomeUser}
@@ -71,19 +72,7 @@ export default function SignUp() {
                     </AreaInput>
 
                     <AreaInput>
-                        <Ionicons name="person" size={20} color="#dedede" style={{ marginLeft: 5 }} />
-                        <Input
-                            placeholder="Sobrenome"
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                            value={sobrenomeUser}
-                            onChangeText={text => setSobrenomeUser(text)}
-                        />
-                        <Ionicons name={sobrenomeUser && sobrenomeUser.length >= 2 ? "checkmark" : "close"} size={20} color={sobrenomeUser === '' ? '#00000000' : (sobrenomeUser && sobrenomeUser.length >=2 ? cores.success : cores.danger)} style={{ marginLeft: -5 }} />
-                    </AreaInput>
-
-                    <AreaInput>
-                        <Ionicons name="mail" size={20} color="#dedede" style={{ marginLeft: 5 }} />
+                        <Ionicons name="mail" size={20} color={minhasCores.color5} style={{ marginLeft: 5 }} />
                         <Input
                             placeholder="Email"
                             autoCorrect={false}
@@ -96,9 +85,9 @@ export default function SignUp() {
                     </AreaInput>
 
                     <AreaInput>
-                        <Ionicons name="lock-closed-sharp" size={20} color="#dedede" style={{ marginLeft: 5 }} />
+                        <Ionicons name="lock-closed-sharp" size={20} color={minhasCores.color5} style={{ marginLeft: 5 }} />
                         <Input
-                            placeholder="Senha de (oito) dígitos"
+                            placeholder="Senha"
                             autoCorrect={false}
                             autoCapitalize="none"
                             value={senhaUser}
@@ -107,27 +96,26 @@ export default function SignUp() {
                         />
                         <Ionicons name={senhaUser.length <= 7 ? "close" : "checkmark"} size={20} color={senhaUser == '' ? '#00000000' : (senhaUser.length <= 7 ? cores.danger : cores.success)} style={{ marginLeft: -5 }} />
                     </AreaInput>
+                    
+                     <AreaInput>
+                        <Ionicons name="lock-closed-sharp" size={20} color={minhasCores.color5} style={{ marginLeft: 5 }} />
+                        <Input
+                            placeholder="Confirma sua senha"
+                            autoCorrect={false}
+                            autoCapitalize="none"
+                            value={repeatSenhaUser}
+                            onChangeText={text => setRepeatSenhaUser(text)}
+                            secureTextEntry={true}
+                        />
+                        <Ionicons name={repeatSenhaUser != senhaUser ? "close" : "checkmark"} size={20} color={repeatSenhaUser == '' ? '#00000000' : (repeatSenhaUser != senhaUser ? cores.danger : cores.success)} style={{ marginLeft: -5 }} />
+                    </AreaInput>
 
-                    <View style={style.piker}>
-                        <MaterialIcons name="table-chart" size={22} color="#dedede" style={{ marginLeft: 5 }} />
-                        <Picker
-                            selectedValue={tipoUser}
-                            onValueChange={value => { setTipoUser(value) }}
-                            dropdownIconColor={tipoUser == '99' ? cores.light : cores.success} size={20} color={senhaAdm == '' ? cores.danger : cores.success}
-                            style={{ color: tipoUser === '' || tipoUser == '99' ? '#484848' : '#dedede', fontSize: 20, width: '95%', height: '100%' }}
-                        >
-                            <Picker.Item key={99} value={99} label={' - Selecione um perfil de usuário'} />
-                            <Picker.Item key={1} value={1} label={'Administrador'} />
-                            <Picker.Item key={2} value={2} label={'Operador'} />
-                            <Picker.Item key={3} value={3} label={'Fiscalizador'} />
-                        </Picker>
-                    </View>
                     {loading ?
-                        (<ActivityIndicator color={cores.color3} size={45} />)
+                        (<ActivityIndicator color={cores.color5} size={45} />)
                         :
                         (
-                            <SubmitButton style={{borderRadius: 10}} onPress={() => {
-                                if (!!validacaoEmail.test(emailUser) && senhaUser.length >= 8 && !!nomeUser && !!sobrenomeUser && !!tipoUser) {
+                            <SubmitButton onPress={() => {
+                                if (!!validacaoEmail.test(emailUser) && senhaUser.length >= 8 && !!nomeUser && !!sobrenomeUser && !!tipoUser && repeatSenhaUser === senhaUser) {
                                     setLoading(true)
                                     signUp(emailUser, senhaUser, nomeUser, sobrenomeUser, tipoUser)
                                     setLoading(false)
@@ -158,10 +146,10 @@ const style = StyleSheet.create({
         textAlign: 'center',
     },
     textHeader: {
-        color: colors.light,
+        color: minhasCores.dark,
         fontSize: 20,
         marginBottom: 30,
-        marginTop: -20
+        marginTop: 10
     },
     piker: {
         backgroundColor: '#00000050',

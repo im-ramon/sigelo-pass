@@ -45,7 +45,7 @@ export default function SignIn() {
                     <Logo source={require('../../assets/logo-1.png')} />
 
                     <AreaInput>
-                        <Ionicons name="person" size={20} color="#000000" style={{ marginLeft: 5 }} />
+                        <Ionicons name="person" size={20} color={minhasCores.color5} style={{ marginLeft: 5 }} />
                         <Input
                             placeholder="Digite seu e-mail"
                             autoCorrect={false}
@@ -58,7 +58,7 @@ export default function SignIn() {
                     </AreaInput>
 
                     <AreaInput >
-                        <Ionicons name="lock-closed" size={20} color="#000000" style={{ marginLeft: 5 }} />
+                        <Ionicons name="lock-closed" size={20} color={minhasCores.color5} style={{ marginLeft: 5 }} />
                         <Input
                             placeholder="Digite sua senha"
                             autoCorrect={false}
@@ -68,8 +68,8 @@ export default function SignIn() {
                             secureTextEntry={textSecure}
                             onChangeText={text => setPassword(text)}
                         />
-                        <TouchableOpacity style={{ marginLeft: 2 }} onPress={() => { setTextSecure(!textSecure); toggleSecureIcon() }}>
-                            <AntDesign name={textSecureIcon} size={20} color="#dedede" />
+                        <TouchableOpacity style={{ marginLeft: -8 }} onPress={() => { setTextSecure(!textSecure); toggleSecureIcon() }}>
+                            <AntDesign name={textSecureIcon} size={20} color={minhasCores.color5} />
                         </TouchableOpacity>
                     </AreaInput>
 
@@ -78,7 +78,7 @@ export default function SignIn() {
                     }}>
                         <SubmitText>
                             Entrar
-                    </SubmitText>
+                        </SubmitText>
                     </SubmitButton>
 
                     <View style={styles.checkboxArea}>
@@ -96,15 +96,15 @@ export default function SignIn() {
                     }}>
                         <LinkText>
                             Esqueci minha senha
-                    </LinkText>
+                        </LinkText>
                     </Link>
 
                     <Link onPress={() => {
                         navigation.navigate('SignUp')
                     }}>
-                        <LinkText style={{ color: '#000' }}>
+                        <LinkText style={{ color: '#00000050' }}>
                             Solicitar acesso ao aplicativo
-                    </LinkText>
+                        </LinkText>
                     </Link>
 
                 </Container>

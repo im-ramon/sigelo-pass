@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { StyleSheet } from 'react-native'
+import minhasCores from '../styles/colors';
 
 export const cores = {
     color1: "#121212",
@@ -24,7 +25,7 @@ justify-content: center;
 
 export const Logo = styled.Image`
 width: 214px;
-height: 264px;
+height: 300px;
 margin-bottom: 16px;
 `;
 
@@ -32,8 +33,9 @@ export const AreaInput = styled.View`
 flex-direction: row;
 width: 65%;
 height: 40px;
+padding-left: 8px;
 margin-bottom: 23px;
-border-radius: 10px;
+border-radius: 22px;
 border-width: 2px;
 border-style: solid;
 border-color: ${'#00000030'};
@@ -54,15 +56,15 @@ margin-left: 15px;
 export const SubmitButton = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
-    background-color: ${cores.color3};
+    background-color: ${minhasCores.color3};
     width: 65%;
     height: 60px;
     margin-top: 10px; 
-    border-radius: 10px;
+    border-radius: 32px;
 `;
 
 export const SubmitText = styled.Text`
-    color: ${cores.color7};
+    color: #ffffff;
     font-weight: bold;
     text-transform: uppercase;
 `;
@@ -74,7 +76,7 @@ export const Link = styled.TouchableOpacity`
 
 
 export const LinkText = styled.Text`
-    color: ${cores.color5};
+    color: ${minhasCores.color3};
 `;
 
 export const styles = StyleSheet.create({

@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
+import minhasCores from '../styles/colors';
 import PassawordReset from '../pages/PassawordReset';
 
 const AuthSatck = createStackNavigator();
@@ -21,11 +22,11 @@ function AuthRoutes() {
             component={SignUp}
             options={{
                 headerStyle: {
-                    backgroundColor: '#121212',
+                    backgroundColor: '#fff',
                     borderBottomWidth: 2,
-                    borderBottomColor: '#F27405'
+                    borderBottomColor: '#000'
                 }, 
-                headerTintColor: '#fff',
+                headerTintColor: '#000',
                 headerBackTitleVisible: false,
                 headerTitle: 'Voltar'
             }}
@@ -36,11 +37,11 @@ function AuthRoutes() {
             component={PassawordReset}
             options={{
                 headerStyle: {
-                    backgroundColor: '#121212',
+                    backgroundColor: '#fff',
                     borderBottomWidth: 2,
-                    borderBottomColor: '#F27405'
+                    borderBottomColor: minhasCores.color3,
                 }, 
-                headerTintColor: '#fff',
+                headerTintColor: '#000',
                 headerBackTitleVisible: false,
                 headerTitle: 'Voltar'
             }}
