@@ -38,10 +38,8 @@ export const style = StyleSheet.create({
         height: 50,
         marginVertical: 20,
         flexDirection: 'row',
-        borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: minhascores.color3,
     },
     btnImprimirText: {
         color: minhascores.light,

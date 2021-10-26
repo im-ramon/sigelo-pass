@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Modal, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
-import { AreaInput, Background, Container, Input, Logo, SubmitButton, SubmitText, Link, LinkText, styles } from '../../styles/styles';
+import { CabecalhoPages, SubmitButton } from '../../styles/styles';
 import Slider from '@react-native-community/slider';
 import { AntDesign } from '@expo/vector-icons';
 import { style } from './style';
 import firebase from '../../services/firebaseConnection';
 import { cores, arrayPostGrad } from '../AddGuest/listas';
 import * as Print from 'expo-print';
-import minhascores from '../../styles/colors';
+import minhasCores from '../../styles/colors';
 
 export default function ExportAllQR() {
 
-    const [users, setUsers] = useState([])
+    const [allGuests, setAllGuests] = useState([])
     const [loadingList, setLoadingList] = useState(true)
     const [loadingButton, setLoadingButton] = useState(false)
 
@@ -19,25 +19,28 @@ export default function ExportAllQR() {
     const [qtdQR, setQtdQR] = useState(12)
 
     useEffect(() => {
-        async function listarUsuarios() {
-            await firebase.database().ref('veiculos').on('value', snapshot => {
-                let arrayVeiculos = []
-                setUsers([])
+        async function listGuest() {
+            await firebase.database().ref('guest').on('value', snapshot => {
+                let guestList = []
+                setAllGuests([])
                 snapshot.forEach(itens => {
                     let data = {
                         key: itens.key,
-                        nomeGuerra: itens.val().nomeGuerra,
-                        postGrad: itens.val().postGrad,
-                        validade: itens.val().validade,
+                        cargo: itens.val().cargo,
+                        modelo: itens.val().modelo,
+                        nomeCompleto: itens.val().nomeCompleto,
+                        observacoes: itens.val().observacoes,
+                        placa: itens.val().placa,
+                        represetante: itens.val().represetante,
+                        presente: itens.val().presente,
                     }
-                    arrayVeiculos.push(data)
+                    guestList.push(data)
                 })
-                arrayVeiculos = arrayVeiculos.sort((a, b) => a.postGrad - b.postGrad)
-                setUsers(arrayVeiculos)
+                setAllGuests(guestList)
                 setLoadingList(false)
             })
         }
-        listarUsuarios()
+        listGuest()
     }, [])
 
     function makeHTML(size, qtd) {
@@ -49,7 +52,7 @@ export default function ExportAllQR() {
 
         let html = ''
 
-        users.forEach((item, index) => {
+        allGuests.forEach((item, index) => {
 
             index == contadorInicio && (html = html + header)
 
@@ -57,7 +60,7 @@ export default function ExportAllQR() {
                 <div style="width: ${size}px; height: ${size}px; display: flex; align-items: center; flex-direction: column; margin: 1em;">
                     <img src="https://chart.googleapis.com/chart?chs=${size}x${size}&cht=qr&chl=${item.key}" style="border: 3px dashed #00000030;" width="100%">
                     <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; background-color: #00000015; width: 100%; border: 2px solid #00000030">
-                        <p style="line-height: 0cm; font-size: ${(size * 8) / 100}px">${arrayPostGrad[item.postGrad].pg} ${item.nomeGuerra}</p>
+                        <p style="line-height: 0cm; font-size: ${(size * 8) / 100}px">${item.nomeCompleto}</p>
                     </div>
                 </div>
             `
@@ -72,13 +75,13 @@ export default function ExportAllQR() {
     }
 
     return (
-        <ImageBackground source={require('../../assets/background.jpg')} style={style.body}>
+        <ImageBackground source={require('../../assets/background-light.jpg')} style={style.body}>
             <View style={style.area1}>
-                <Text style={style.header}>Impressão de todos os adesivos</Text>
+                <CabecalhoPages>Impressão de todos os adesivos</CabecalhoPages>
             </View>
             {
                 loadingList ?
-                    (<View style={style.area2}><ActivityIndicator color={minhascores.color3} size={50} /></View>)
+                    (<View style={style.area2}><ActivityIndicator color={minhasCores.color3} size={50} /></View>)
                     :
                     (<View style={style.area2}>
                         <Text style={localStyle.header}>Ajustes para impressão</Text>
@@ -97,10 +100,10 @@ export default function ExportAllQR() {
                         </View>
 
                         <View style={localStyle.areaSlider}>
-                            <Text style={localStyle.h1}>Quantidade por folha: <Text style={localStyle.simpleText}>{qtdQR} x {qtdQR}</Text></Text>
+                            <Text style={localStyle.h1}>Quantidade por folha: <Text style={localStyle.simpleText}>{qtdQR}</Text></Text>
                             <Slider
                                 style={localStyle.slider}
-                                minimumValue={2}
+                                minimumValue={1}
                                 value={qtdQR}
                                 onValueChange={value => { setQtdQR(value) }}
                                 step={1}
@@ -111,7 +114,7 @@ export default function ExportAllQR() {
                             />
                         </View>
 
-                        <TouchableOpacity style={{ ...style.btnImprimir, marginTop: 150 }} onPress={() => {
+                        <SubmitButton style={{ ...style.btnImprimir, marginTop: 150 }} onPress={() => {
                             setLoadingList(true);
                             Print.printAsync({
                                 html: makeHTML(sizeQR, qtdQR)
@@ -121,7 +124,7 @@ export default function ExportAllQR() {
                         }}>
                             <Text style={style.btnImprimirText}>Imprimir ou salvar em PDF</Text>
                             <AntDesign name="printer" size={24} style={style.btnIcons} />
-                        </TouchableOpacity>
+                        </SubmitButton>
                     </View>
                     )
             }
@@ -132,19 +135,20 @@ export default function ExportAllQR() {
 const localStyle = StyleSheet.create({
     header: {
         fontSize: 22,
-        color: 'white',
-        borderBottomColor: minhascores.color5,
+        color: minhasCores.dark,
+        borderBottomColor: minhasCores.color3,
         borderBottomWidth: 2,
-        marginBottom: 10
+        marginBottom: 22,
+        paddingBottom: 5,
     },
     h1: {
-        color: 'white',
+        color: minhasCores.dark,
         fontSize: 16,
         justifyContent: 'center',
         textAlign: 'center'
     },
     simpleText: {
-        color: '#ffffff80',
+        color:minhasCores.dark,
         fontSize: 15,
         alignSelf: 'center'
     },
@@ -155,7 +159,7 @@ const localStyle = StyleSheet.create({
     },
     areaSlider: {
         marginBottom: 10,
-        backgroundColor: '#ffffff10',
+        backgroundColor: minhasCores.color3,
         paddingHorizontal: 10,
         paddingVertical: 20,
         borderRadius: 20,
