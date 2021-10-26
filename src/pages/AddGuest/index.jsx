@@ -74,12 +74,14 @@ export default function AddGuest() {
             cargo: cargo || '-', 
             modelo: modelo || '-', 
             placa: placa || '-', 
-            observacoes: observacoes || '-'
+            observacoes: observacoes || '-',
+            presente: '0',
         }).then((foo) => {
-            setLoadingUpdate(false)
             alertFunc('success')
         }).catch(err => {
             alert(err)
+        }).finally(()=>{
+            setLoadingUpdate(false)
         })
     }
 
