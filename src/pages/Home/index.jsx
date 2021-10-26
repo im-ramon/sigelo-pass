@@ -14,7 +14,7 @@ export default function Home() {
     const navigation = useNavigation();
 
     const { signOut, user, setLoading } = useContext(AuthContext);
-    const { setPageName, setToday, background, setBackground } = useContext(AppContext);
+    const { setPageName } = useContext(AppContext);
 
     const [eventType, setEventType] = useState('0');
     const [modalActive, setModalActive] = useState(false);
@@ -25,10 +25,8 @@ export default function Home() {
 
 
     const navigateTo = (pageNameNav) => {
-        pageNameNav === 'all' ? setPageName('Cadastros ativos') : setPageName('Cadastros vencidos')
-
-        setToday(new Date())
-        navigation.navigate('UserList')
+        setPageName(pageNameNav)
+        navigation.navigate('handleGuests')
     }
 
     return (
@@ -47,7 +45,6 @@ export default function Home() {
                 </View>
 
                 <Text style={style.textWelcome}>Bem vindo, {user.nome}!</Text>
-                {/* <Text  style={style.textType}>Tipo de tela</Text> */}
 
                 <View style={style.toggleTypeEventArea}>
                     <TouchableOpacity style={{ ...style.btnToggleTypeEventArea, backgroundColor: eventType === '0' ? minhasCores.color5 : '#ffffff10' }} onPress={() => { setEventType('0') }}>
@@ -84,7 +81,7 @@ export default function Home() {
                         )}
 
                         {(eventType === '1' || eventType === '0') && (
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigateTo('expired') }} >
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigateTo('presentGuests') }} >
                                 <View style={{ ...style.icon, backgroundColor: '#fdeff2' }}>
                                     <FontAwesome5 name="user-check" size={32} color={'#ec6e82'} />
                                 </View>
@@ -102,7 +99,7 @@ export default function Home() {
                         )}
 
                         {(eventType === '2' || eventType === '0') && (
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigateTo('all') }}>
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigateTo('allGuests') }}>
                                 <View style={{ ...style.icon, backgroundColor: '#f3f6fe' }}>
                                     <FontAwesome5 name="user-cog" size={32} color={'#b66ce1'} />
                                 </View>

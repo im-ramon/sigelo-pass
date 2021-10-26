@@ -3,7 +3,7 @@ import { createStackNavigator, TransitionSpecs, HeaderStyleInterpolators } from 
 import Home from '../pages/Home';
 import ScannerQR from '../pages/ScannerQR';
 import AddGuest from '../pages/AddGuest';
-import UserList from '../pages/UserList';
+import handleGuests from '../pages/handleGuests';
 import Approver from '../pages/Approver';
 import Profiles from '../pages/Profiles';
 import ExportAllQR from '../pages/ExportAllQR';
@@ -92,18 +92,18 @@ function AppRoutes() {
             />
 
             <AppSatck.Screen
-                name="UserList"
-                component={UserList}
+                name="handleGuests"
+                component={handleGuests}
                 options={{
                     ...configAnimation,
                     headerShown: true,
                     title: 'Voltar',
                     headerStyle: {
-                        backgroundColor: minhascores.color1,
-                        borderBottomColor: '#F27405',
+                        backgroundColor: minhascores.white,
+                        borderBottomColor: minhascores.color3,
                         borderBottomWidth: 2
                     },
-                    headerTintColor: '#fff'
+                    headerTintColor: minhascores.color5
                 }}
             />
 
