@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator, TransitionSpecs, HeaderStyleInterpolators } from '@react-navigation/stack';
 import Home from '../pages/Home';
 import ScannerQR from '../pages/ScannerQR';
-import Register from '../pages/Register';
+import AddGuest from '../pages/AddGuest';
 import UserList from '../pages/UserList';
 import Approver from '../pages/Approver';
 import Profiles from '../pages/Profiles';
@@ -67,27 +67,27 @@ function AppRoutes() {
                     headerShown: true,
                     title: 'Voltar',
                     headerStyle: {
-                        backgroundColor: minhascores.color1,
-                        borderBottomColor: '#F27405',
+                        backgroundColor: minhascores.white,
+                        borderBottomColor: minhascores.color3,
                         borderBottomWidth: 2
                     },
-                    headerTintColor: '#fff'
+                    headerTintColor: minhascores.color5
                 }}
             />
 
             <AppSatck.Screen
-                name="Register"
-                component={Register}
+                name="AddGuest"
+                component={AddGuest}
                 options={{
                     ...configAnimation,
                     headerShown: true,
                     title: 'Voltar',
                     headerStyle: {
-                        backgroundColor: minhascores.color1,
-                        borderBottomColor: '#F27405',
+                        backgroundColor: minhascores.white,
+                        borderBottomColor: minhascores.color3,
                         borderBottomWidth: 2
                     },
-                    headerTintColor: '#fff',
+                    headerTintColor: minhascores.color5,
                 }}
             />
 

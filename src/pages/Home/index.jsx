@@ -70,7 +70,7 @@ export default function Home() {
                                 <View style={{ ...style.icon, backgroundColor: '#e5f6fc' }}>
                                     <AntDesign name="qrcode" size={48} color={'#3fb5d2'} />
                                 </View>
-                                <Text style={style.section_btn_text}>Escanear adesivo</Text>
+                                <Text style={style.section_btn_text}>Escanear convite</Text>
                             </TouchableOpacity>
                         )}
 
@@ -111,7 +111,7 @@ export default function Home() {
                         )}
 
                         {(eventType === '2' || eventType === '0') && (
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Register') }}>
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('AddGuest') }}>
                                 <View style={{ ...style.icon, backgroundColor: '#ebf7ff' }}>
                                     <FontAwesome5 name="user-plus" size={32} color={'#4bc1f9'} />
                                 </View>
@@ -124,7 +124,7 @@ export default function Home() {
                                 <View style={{ ...style.icon, backgroundColor: '#ffd5d5' }}>
                                     <FontAwesome5 name="file-export" size={32} color={'#bb0e0e'} />
                                 </View>
-                                <Text style={style.section_btn_text}>Exportar todos adesivos</Text>
+                                <Text style={style.section_btn_text}>Exportar todos convites</Text>
                             </TouchableOpacity>
                         )}
 

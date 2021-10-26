@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, ActivityIndicator, Alert } from 'react-native'
-import { cores, arrayPostGrad } from '../Register/listas'
+import { cores, arrayPostGrad } from '../AddGuest/listas'
 import { AntDesign } from '@expo/vector-icons';
 import { AreaInput, Background, Container, Input, Logo, SubmitButton, SubmitText, Link, LinkText, styles } from '../../styles/styles';
 import { Picker } from '@react-native-picker/picker'

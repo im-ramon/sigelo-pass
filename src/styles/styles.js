@@ -14,7 +14,22 @@ export const cores = {
 
 export const Background = styled.View`
 flex: 1;
-background-color: ${cores.color1};
+font-size: 24px;
+`;
+
+export const CabecalhoPages = styled.Text`
+color: ${minhasCores.white};
+margin-bottom: 30px;
+font-size: 20px;
+background-color: ${minhasCores.color3};
+margin-top: 30px;
+border-width: 3px;
+border-color: ${minhasCores.dark_soft};
+border-radius: 20px;
+padding-left: 25px;
+padding-right: 25px;
+padding-top: 10px;
+padding-bottom: 10px;
 `;
 
 export const Container = styled.KeyboardAvoidingView`
@@ -96,11 +111,11 @@ export const styles = StyleSheet.create({
         width: "150%",
     },
     checkbox: {
-        
-    }, 
+
+    },
     textCheckbox: {
         color: '#000000',
-    }, 
+    },
     checkboxArea: {
         marginTop: 15,
         marginBottom: 50,
@@ -108,7 +123,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
-    }, 
+    },
     helpIcon: {
         color: cores.color1,
     },

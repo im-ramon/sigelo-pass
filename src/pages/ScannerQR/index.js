@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, Button, Modal, TouchableOpacity, Alert, Activit
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import firebase from '../../../src/services/firebaseConnection';
 import { Ionicons } from '@expo/vector-icons';
-import { cores } from '../Register/listas';
-import { arrayPostGrad } from '../Register/listas'
+import { cores } from '../AddGuest/listas';
+import { arrayPostGrad } from '../AddGuest/listas'
 import minhasCores from '../../styles/colors'
 import { AppContext } from '../../contexts/appContexts'
 
@@ -103,7 +103,7 @@ export default function ScannerQR() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textAbsolute}>Aponte a câmera para o QRCode no adesivo.</Text>
+      <Text style={styles.textAbsolute}>Aponte a câmera para o QRCode no convite.</Text>
 
       <Modal animationType="slide" visible={modalActive} >
         <View style={styles.modalContainer}>
@@ -165,7 +165,7 @@ export default function ScannerQR() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     fontSize: 18,
     top: 30,
-    color: '#dedede'
+    color: minhasCores.color5
   },
   textResposta: {
     fontSize: 24,

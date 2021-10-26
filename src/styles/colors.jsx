@@ -15,6 +15,7 @@ const cores = {
     white: '#ffffff',
     black: '#121212',
     dark: '#121212',
+    dark_soft: '#00000020',
 }
 
 export default cores;

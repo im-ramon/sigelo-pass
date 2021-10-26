@@ -1,19 +1,9 @@
 import react from 'react'
 import { StyleSheet } from 'react-native'
+import minhasCores from '../../styles/colors'
 
 
 export const style = StyleSheet.create({
-    textH1: {
-        fontSize: 28,
-        color: '#ffffff',
-        marginBottom: 30,
-        marginTop: 30,
-        borderBottomWidth: 3,
-        borderBottomColor: '#F27405',
-        paddingHorizontal: 10,
-        paddingVertical: 2,
-        borderRadius: 10
-    },
     viewTextArea: {
         width: '80%',
     },
