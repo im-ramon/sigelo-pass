@@ -4,10 +4,23 @@ import cores from '../../styles/colors'
 const styles = StyleSheet.create({
     body: {
       flex: 1,
-      backgroundColor: cores.color1,
+      backgroundColor: '#ffffffbc',
       justifyContent: 'center',
       alignItems: 'center',
       width: '100%'
+    },
+    root: {
+        width: '80%',
+        height: '40%',
+        borderRadius: 25,
+        backgroundColor: '#fff',
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+        elevation: 12,
     },
     header: {
         flex: 1,
@@ -17,12 +30,37 @@ const styles = StyleSheet.create({
     },  
     textHeader: {
         fontSize: 24,
-        color: cores.light,
-        borderBottomColor: cores.color5,
-        borderBottomWidth: 3,
-        borderRadius: 10,
-        marginBottom: 15,
+        color: cores.color3,
+        backgroundColor: cores.white,
+        borderColor: cores.color7,
+        paddingHorizontal: 16,
+        borderRadius: 12,
+        textAlign: 'center',
+        borderWidth: 2,
     },
+    btnClose: {
+        backgroundColor: '#fff',
+        borderRadius: 50,
+        color: cores.color3,
+        width: 40,
+        height: 40,
+        right: -10,
+        top: -20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+        elevation: 12,
+    },
+    iconBtnClose: {
+        color: cores.color3,
+    }, 
     main: {
         flex: 5,
         width: '100%',
@@ -36,10 +74,10 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     text: {
-        color: cores.light,
+        color: cores.white,
     },  
     textVersion: {
-        color: `${cores.light}30`,
+        color: `${cores.white}`,
     }, 
     viewGit: {
         flex: 1,
@@ -48,7 +86,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     textGit: {
-        color: `${cores.light}30`,
+        color: `${cores.white}`,
         fontSize: 18,
     },
     themeArea: {

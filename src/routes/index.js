@@ -11,7 +11,7 @@ function Routes() {
 
     if (loading) {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: minhasCores.light }}>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: minhasCores.white }}>
                 <Image style={style.imgLogo} source={require('../../src/assets/logo-6.png')} />
                 <ActivityIndicator size="large" color={minhasCores.color3} />
             </View>

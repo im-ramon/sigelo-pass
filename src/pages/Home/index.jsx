@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { ImageBackground, StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { Background, cores } from '../../styles/styles';
+import { ImageBackground, StyleSheet, View, Text, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { Background } from '../../styles/styles';
 import { Ionicons, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/auth'
 import { AppContext } from '../../contexts/appContexts'
 import { LinearGradient } from 'expo-linear-gradient';
-import minhasCores from '../../styles/colors'
-import Svg, { Path, SvgXml } from "react-native-svg"
+import minhasCores from '../../styles/colors';
+import modalStyle from './modalStyle';
 
 export default function Home() {
 
@@ -16,7 +16,12 @@ export default function Home() {
     const { signOut, user, setLoading } = useContext(AuthContext);
     const { setPageName, setToday, background, setBackground } = useContext(AppContext);
 
-    const [eventType, setEventType] = useState('1');
+    const [eventType, setEventType] = useState('0');
+    const [modalActive, setModalActive] = useState(false);
+
+    // Isso aqui pode quebrar o App no futura, ATENÇÃO!!!!
+    const appJSON = require('../../../app.json')
+    // Isso aqui pode quebrar o App no futura, ATENÇÃO!!!!
 
 
     const navigateTo = (pageNameNav) => {
@@ -36,7 +41,7 @@ export default function Home() {
                         <Ionicons name="md-exit-outline" size={40} color={minhasCores.light} style={{ transform: [{ rotate: "180deg" }] }} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={style.menuItem} onPress={() => { navigation.navigate('Conf') }}>
+                    <TouchableOpacity style={style.menuItem} onPress={() => { setModalActive(true) }}>
                         <Ionicons name="information-circle-outline" size={40} color={minhasCores.light} />
                     </TouchableOpacity>
                 </View>
@@ -62,7 +67,7 @@ export default function Home() {
                     <View style={style.section}>
                         {(eventType === '1' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btnLarge} onPress={() => { navigation.navigate('ScannerQR') }}>
-                                <View style={{...style.icon, backgroundColor: '#e5f6fc'}}>
+                                <View style={{ ...style.icon, backgroundColor: '#e5f6fc' }}>
                                     <AntDesign name="qrcode" size={48} color={'#3fb5d2'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Escanear adesivo</Text>
@@ -71,7 +76,7 @@ export default function Home() {
 
                         {(eventType === '1' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Profiles') }}>
-                                <View style={{...style.icon, backgroundColor: '#f0eaff'}}>
+                                <View style={{ ...style.icon, backgroundColor: '#f0eaff' }}>
                                     <FontAwesome5 name="clipboard-list" size={32} color={'#5e38ea'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Convidados presentes</Text>
@@ -80,7 +85,7 @@ export default function Home() {
 
                         {(eventType === '1' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigateTo('expired') }} >
-                                <View style={{...style.icon, backgroundColor: '#fdeff2'}}>
+                                <View style={{ ...style.icon, backgroundColor: '#fdeff2' }}>
                                     <FontAwesome5 name="user-check" size={32} color={'#ec6e82'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Confirmar presenças</Text>
@@ -89,7 +94,7 @@ export default function Home() {
 
                         {(eventType === '2' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Approver') }}>
-                                <View style={{...style.icon, backgroundColor: '#fef5f0'}}>
+                                <View style={{ ...style.icon, backgroundColor: '#fef5f0' }}>
                                     <FontAwesome5 name="users-cog" size={32} color={'#f69b63'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Gerenciar controladores</Text>
@@ -98,7 +103,7 @@ export default function Home() {
 
                         {(eventType === '2' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigateTo('all') }}>
-                                <View style={{...style.icon, backgroundColor: '#f3f6fe'}}>
+                                <View style={{ ...style.icon, backgroundColor: '#f3f6fe' }}>
                                     <FontAwesome5 name="user-cog" size={32} color={'#b66ce1'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Gerenciar convidados</Text>
@@ -107,7 +112,7 @@ export default function Home() {
 
                         {(eventType === '2' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Register') }}>
-                                <View style={{...style.icon, backgroundColor: '#ebf7ff'}}>
+                                <View style={{ ...style.icon, backgroundColor: '#ebf7ff' }}>
                                     <FontAwesome5 name="user-plus" size={32} color={'#4bc1f9'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Adicionar convidado</Text>
@@ -116,7 +121,7 @@ export default function Home() {
 
                         {(eventType === '2' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('ExportAllQR') }}>
-                                <View style={{...style.icon, backgroundColor: '#ffd5d5'}}>
+                                <View style={{ ...style.icon, backgroundColor: '#ffd5d5' }}>
                                     <FontAwesome5 name="file-export" size={32} color={'#bb0e0e'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Exportar todos adesivos</Text>
@@ -125,7 +130,7 @@ export default function Home() {
 
                         {(eventType === '2' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Approver') }}>
-                                <View style={{...style.icon, backgroundColor: '#f8f8c4'}}>
+                                <View style={{ ...style.icon, backgroundColor: '#f8f8c4' }}>
                                     <FontAwesome5 name="users-cog" size={32} color={'#999901'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Gerenciar controladores</Text>
@@ -136,7 +141,37 @@ export default function Home() {
                 </ScrollView>
             </View>
 
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalActive}
+                style={style.modalContainer}
+            >
+                <View style={modalStyle.body}>
+                    <View style={modalStyle.root}>
+                        <LinearGradient colors={[minhasCores.color4, minhasCores.color3]} style={style.linearGradient2} />
+                        <TouchableOpacity onPress={() => { setModalActive(false) }} style={modalStyle.btnClose}>
+                            <AntDesign name="closecircleo" size={24} style={modalStyle.iconBtnClose} />
+                        </TouchableOpacity>
+                        <View style={modalStyle.header}>
+                            <Text style={modalStyle.textHeader}>Informações</Text>
+                        </View>
 
+                        <View style={modalStyle.main}>
+                            <Text style={modalStyle.textVersion}>Versão {appJSON.expo.version}</Text>
+                            <Text style={modalStyle.textVersion}>Desenvolvido por Ramon Oliveira</Text>
+                            <Text style={modalStyle.textVersion}>www.ramonoliveira.dev</Text>
+                            <Text style={{ ...modalStyle.textVersion, marginTop: 24 }}>Suporte: contato@ramonoliveira.dev</Text>
+                        </View>
+
+
+                        <View style={modalStyle.footer}>
+                            <View style={modalStyle.viewGit}><AntDesign name="github" size={22} color="#ffffff" /><Text style={modalStyle.textGit}> /im-ramon</Text></View>
+                        </View>
+                    </View>
+                </View>
+
+            </Modal>
         </Background>
     );
 }
@@ -245,7 +280,7 @@ const style = StyleSheet.create({
         top: 35,
     },
     textType: {
-        color: `${cores.color7}`,
+        color: '#ff0',
         fontSize: 16,
     },
     section_btn: {
@@ -301,6 +336,14 @@ const style = StyleSheet.create({
         right: 0,
         top: 0,
         height: "50%",
+    },
+    linearGradient2: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        height: "100%",
+        borderRadius: 25,
     },
     icon: {
         borderRadius: 50,

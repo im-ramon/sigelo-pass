@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator, TransitionSpecs, HeaderStyleInterpolators } from '@react-navigation/stack';
 import Home from '../pages/Home';
 import ScannerQR from '../pages/ScannerQR';
-import Conf from '../pages/Conf';
 import Register from '../pages/Register';
 import UserList from '../pages/UserList';
 import Approver from '../pages/Approver';
@@ -105,23 +104,6 @@ function AppRoutes() {
                         borderBottomWidth: 2
                     },
                     headerTintColor: '#fff'
-                }}
-            />
-
-            <AppSatck.Screen
-                name="Conf"
-                component={Conf}
-                options={{
-                    // ...configAnimation,
-                    headerShown: true,
-                    title: 'Voltar',
-                    headerStyle: {
-                        backgroundColor: minhascores.color1,
-                        borderBottomColor: '#F27405',
-                        borderBottomWidth: 2
-                    },
-                    headerTintColor: '#fff',
-
                 }}
             />
 
