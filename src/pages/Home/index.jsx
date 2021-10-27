@@ -90,11 +90,11 @@ export default function Home() {
                         )}
 
                         {(eventType === '2' || eventType === '0') && (
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Approver') }}>
-                                <View style={{ ...style.icon, backgroundColor: '#fef5f0' }}>
-                                    <FontAwesome5 name="users-cog" size={32} color={'#f69b63'} />
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('AddGuest') }}>
+                                <View style={{ ...style.icon, backgroundColor: '#ebf7ff' }}>
+                                    <FontAwesome5 name="user-plus" size={32} color={'#4bc1f9'} />
                                 </View>
-                                <Text style={style.section_btn_text}>Gerenciar controladores</Text>
+                                <Text style={style.section_btn_text}>Adicionar convidado</Text>
                             </TouchableOpacity>
                         )}
 
@@ -108,11 +108,11 @@ export default function Home() {
                         )}
 
                         {(eventType === '2' || eventType === '0') && (
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('AddGuest') }}>
-                                <View style={{ ...style.icon, backgroundColor: '#ebf7ff' }}>
-                                    <FontAwesome5 name="user-plus" size={32} color={'#4bc1f9'} />
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Approver') }}>
+                                <View style={{ ...style.icon, backgroundColor: '#fef5f0' }}>
+                                    <FontAwesome5 name="users-cog" size={32} color={'#f69b63'} />
                                 </View>
-                                <Text style={style.section_btn_text}>Adicionar convidado</Text>
+                                <Text style={style.section_btn_text}>Gerenciar controladores</Text>
                             </TouchableOpacity>
                         )}
 

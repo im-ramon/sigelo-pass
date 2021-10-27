@@ -53,7 +53,7 @@ export default function handleGuests() {
     }, [])
 
     useEffect(() => {
-        search === '' ? setFilterGuests(allGuests) : search != null && setFilterGuests(allGuests.filter(item => item.nomeCompleto.toLowerCase().indexOf(search.toLowerCase()) > - 1 || item.representante.toLowerCase().indexOf(search.toLowerCase()) > - 1 ))
+        search === '' ? setFilterGuests(allGuests) : search != null && setFilterGuests(allGuests.filter(item => item.nomeCompleto.toLowerCase().indexOf(search.toLowerCase()) > -1 || item.representante.toLowerCase().indexOf(search.toLowerCase()) > -1))
     }, [search])
 
 

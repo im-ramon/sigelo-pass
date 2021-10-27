@@ -75,7 +75,7 @@ export default function AddGuest() {
             modelo: modelo || '-', 
             placa: placa || '-', 
             observacoes: observacoes || '-',
-            presente: '0',
+            presente: 'nao',
         }).then((foo) => {
             alertFunc('success')
         }).catch(err => {
