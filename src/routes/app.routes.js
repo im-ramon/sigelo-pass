@@ -4,7 +4,7 @@ import Home from '../pages/Home';
 import ScannerQR from '../pages/ScannerQR';
 import AddGuest from '../pages/AddGuest';
 import handleGuests from '../pages/handleGuests';
-import Approver from '../pages/Approver';
+import GenerateGuestList from '../pages/GenerateGuestList';
 import Profiles from '../pages/Profiles';
 import ExportAllQR from '../pages/ExportAllQR';
 
@@ -108,18 +108,18 @@ function AppRoutes() {
             />
 
             <AppSatck.Screen
-                name="Approver"
-                component={Approver}
+                name="GenerateGuestList"
+                component={GenerateGuestList}
                 options={{
                     ...configAnimation,
                     headerShown: true,
                     title: 'Voltar',
                     headerStyle: {
-                        backgroundColor: minhascores.color1,
-                        borderBottomColor: '#F27405',
+                        backgroundColor: minhascores.white,
+                        borderBottomColor: minhascores.color3,
                         borderBottomWidth: 2
                     },
-                    headerTintColor: '#fff',
+                    headerTintColor: minhascores.color5,
 
                 }}
             />

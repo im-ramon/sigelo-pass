@@ -24,6 +24,7 @@ font-size: 20px;
 background-color: ${minhasCores.color3};
 margin-top: 30px;
 border-width: 3px;
+text-align: center;
 border-color: ${minhasCores.dark_soft};
 border-radius: 20px;
 padding-left: 25px;

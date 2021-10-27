@@ -72,7 +72,7 @@ export default function Home() {
                         )}
 
                         {(eventType === '1' || eventType === '0') && (
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Profiles') }}>
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('GenerateGuestList') }}>
                                 <View style={{ ...style.icon, backgroundColor: '#f0eaff' }}>
                                     <FontAwesome5 name="clipboard-list" size={32} color={'#5e38ea'} />
                                 </View>

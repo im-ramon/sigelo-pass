@@ -5,11 +5,8 @@ import firebase from '../../services/firebaseConnection';
 import { AreaInput, Background, Container, Input, Logo, SubmitButton, SubmitText, Link, LinkText, CabecalhoPages } from '../../styles/styles';
 import { Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import minhasCores from '../../styles/colors';
-import { AppContext } from '../../contexts/appContexts';
 
 export default function ScannerQR() {
-
-    const { today } = useContext(AppContext);
 
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
