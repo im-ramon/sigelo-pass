@@ -35,7 +35,7 @@ export default function handleGuests() {
                     nomeCompleto: itens.val().nomeCompleto,
                     observacoes: itens.val().observacoes,
                     placa: itens.val().placa,
-                    represetante: itens.val().represetante,
+                    representante: itens.val().representante,
                     presente: itens.val().presente,
                 }
                 guestList.push(data)
@@ -53,7 +53,7 @@ export default function handleGuests() {
     }, [])
 
     useEffect(() => {
-        search === '' ? setFilterGuests(allGuests) : search != null && setFilterGuests(allGuests.filter(item => item.nomeCompleto.toLowerCase().indexOf(search.toLowerCase()) > - 1 || item.represetante.toLowerCase().indexOf(search.toLowerCase()) > - 1 ))
+        search === '' ? setFilterGuests(allGuests) : search != null && setFilterGuests(allGuests.filter(item => item.nomeCompleto.toLowerCase().indexOf(search.toLowerCase()) > - 1 || item.representante.toLowerCase().indexOf(search.toLowerCase()) > - 1 ))
     }, [search])
 
 

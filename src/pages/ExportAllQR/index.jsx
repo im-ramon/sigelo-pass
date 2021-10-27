@@ -31,7 +31,7 @@ export default function ExportAllQR() {
                         nomeCompleto: itens.val().nomeCompleto,
                         observacoes: itens.val().observacoes,
                         placa: itens.val().placa,
-                        represetante: itens.val().represetante,
+                        representante: itens.val().representante,
                         presente: itens.val().presente,
                     }
                     guestList.push(data)

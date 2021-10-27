@@ -9,7 +9,7 @@ import firebase from '../../services/firebaseConnection'
 import { arrayPostGrad, cores } from './listas'
 import ModalConfirm from './ModalConfirm'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import minhascores from '../../styles/colors'
+import minhascores from '../../styles/colors';
 
 export default function AddGuest() {
 
@@ -17,7 +17,7 @@ export default function AddGuest() {
 
     //dados do formulário: 
     const [nomeCompleto, setNomeCompleto] = useState('')
-    const [represetante, setRepresetante] = useState('')
+    const [representante, setRepresentante] = useState('')
     const [cargo, setCargo] = useState('')
     const [modelo, setModelo] = useState('')
     const [placa, setPlaca] = useState('')
@@ -50,7 +50,7 @@ export default function AddGuest() {
                         text: "Inserir outro convidado", onPress: () => {
                             console.log('ToStay')
                             setNomeCompleto('')
-                            setRepresetante('')
+                            setRepresentante('')
                             setCargo('')
                             setModelo('')
                             setPlaca('')
@@ -64,13 +64,13 @@ export default function AddGuest() {
         }
     }
 
-    async function insertNoFireBase(nomeCompleto, represetante, cargo, modelo, placa, observacoes) {
+    async function insertNoFireBase(nomeCompleto, representante, cargo, modelo, placa, observacoes) {
         let database = firebase.database().ref('guest');
         let randomKey = database.push().key
 
         await database.child(randomKey).set({
             nomeCompleto: nomeCompleto || '-', 
-            represetante: represetante || '-', 
+            representante: representante || '-', 
             cargo: cargo || '-', 
             modelo: modelo || '-', 
             placa: placa || '-', 
@@ -111,10 +111,10 @@ export default function AddGuest() {
                                 placeholder="Representante"
                                 autoCorrect={false}
                                 autoCapitalize="sentences"
-                                value={represetante}
-                                onChangeText={text => setRepresetante(text.replace(regexAllTexts, ''))}
+                                value={representante}
+                                onChangeText={text => setRepresentante(text.replace(regexAllTexts, ''))}
                             />
-                            <Ionicons name={represetante.length > 1 ? "checkmark" : "close"} size={20} color={represetante === '' ? "#00000000" : (represetante.length > 1 ? minhascores.success : minhascores.danger)} style={{ marginLeft: 10 }} />
+                            <Ionicons name={representante.length > 1 ? "checkmark" : "close"} size={20} color={representante === '' ? "#00000000" : (representante.length > 1 ? minhascores.success : minhascores.danger)} style={{ marginLeft: 10 }} />
                         </AreaInput>
 
 
@@ -174,7 +174,7 @@ export default function AddGuest() {
                                 <SubmitButton style={style.btnEnviar} onPress={() => {
                                     if (nomeCompleto != '' && cargo != '') {
                                         setLoadingUpdate(true)
-                                        insertNoFireBase(nomeCompleto, represetante, cargo, modelo, placa, observacoes)
+                                        insertNoFireBase(nomeCompleto, representante, cargo, modelo, placa, observacoes)
                                     } else {
                                         alertFunc('erro')
                                     }

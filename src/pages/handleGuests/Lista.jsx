@@ -28,7 +28,7 @@ export default function Lista({ data }) {
     const [modelo, setModelo] = useState(data.modelo)
     const [placa, setPlaca] = useState(data.placa)
     const [observacoes, setObservacoes] = useState(data.observacoes)
-    const [represetante, setRepresetante] = useState(data.represetante)
+    const [representante, setRepresentante] = useState(data.representante)
     const [presente, setPresente] = useState(data.presente)
 
     const regexPlate = /^[A-Za-z]{3}([0-9]{1}[A-Za-z]{1}[0-9]{2}|[0-9]{4}$)/
@@ -84,9 +84,9 @@ export default function Lista({ data }) {
         return HTML
     }
 
-    async function updateOnFirebase(key, nomeCompleto, cargo, modelo, represetante, placa, observacoes, presente) {
+    async function updateOnFirebase(key, nomeCompleto, cargo, modelo, representante, placa, observacoes, presente) {
         setLoadingUpdate(true)
-        await firebase.database().ref('guest').child(key).update({ nomeCompleto, cargo, modelo, represetante, placa, observacoes, presente })
+        await firebase.database().ref('guest').child(key).update({ nomeCompleto, cargo, modelo, representante, placa, observacoes, presente })
             .then(() => {
                 setLoadingUpdate(false)
                 setBtnCor(`${minhasCores.success}`)
@@ -124,7 +124,7 @@ export default function Lista({ data }) {
             </View>
 
             <View style={LocalStyle.sectionGuestData}>
-                <Text style={LocalStyle.textDestaque}>Representado por: <Text style={LocalStyle.textSimples}>{data.represetante}</Text></Text>
+                <Text style={LocalStyle.textDestaque}>Representado por: <Text style={LocalStyle.textSimples}>{data.representante}</Text></Text>
                 <Text style={LocalStyle.textDestaque}>Cargo/ Função: <Text style={LocalStyle.textSimples}>{data.cargo}</Text></Text>
                 <Text style={LocalStyle.textDestaque}>Veículo: <Text style={LocalStyle.textSimples}>{data.modelo}</Text></Text>
                 <Text style={LocalStyle.textDestaque}>Placa: <Text style={LocalStyle.textSimples}>{data.placa}</Text></Text>
@@ -202,8 +202,8 @@ export default function Lista({ data }) {
                                         placeholder="Cargo/ Função"
                                         autoCorrect={false}
                                         autoCapitalize="sentences"
-                                        value={represetante}
-                                        onChangeText={text => setRepresetante(text.replace(regexAllTexts, ''))}
+                                        value={representante}
+                                        onChangeText={text => setRepresentante(text.replace(regexAllTexts, ''))}
                                     />
                                     <Ionicons name={cargo.length > 1 ? "checkmark" : "close"} size={20} color={cargo === '' ? "#00000000" : (cargo.length > 1 ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 0 }} />
                                 </AreaInput>
@@ -278,7 +278,7 @@ export default function Lista({ data }) {
 
                                             onPress={() => {
                                                 if (nomeCompleto != '' && cargo != '') {
-                                                    updateOnFirebase(key, nomeCompleto, cargo, modelo, represetante, placa, observacoes, presente)
+                                                    updateOnFirebase(key, nomeCompleto, cargo, modelo, representante, placa, observacoes, presente)
                                                 } else {
                                                     alertFill()
                                                 }
