@@ -202,13 +202,11 @@ const style = StyleSheet.create({
     sectionScrollView: {
         flex: 1,
     },
-    sectionScrollView: {
-        flex: 1,
-    },
     sectionMaster: {
         flex: 12,
         backgroundColor: '#fff',
         width: '100%',
+        height: '100%',
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         flexDirection: 'column',
@@ -256,6 +254,7 @@ const style = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         alignItems: 'center',
+        paddingBottom: 50,
     },
     bodyBackground: {
         flex: 1,

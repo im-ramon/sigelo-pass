@@ -29,6 +29,8 @@ export default function ScannerQR() {
             const { status } = await BarCodeScanner.requestPermissionsAsync();
             setHasPermission(status === 'granted');
         })();
+
+        setScanned(false)
     }, []);
 
     async function dados(data) {
@@ -96,9 +98,12 @@ export default function ScannerQR() {
                 setLoading(false)
                 Alert.alert(
                     `Presença confirmada!`,
-                    `A presença de "${nomeCompleto}"" foi confirmada no evento.`,
+                    `A presença de "${nomeCompleto}" foi confirmada no evento.`,
                     [
-                        { text: "Continuar", onPress: () => {setScanned(false); setModalActive(false);} }
+                        { text: "Continuar", onPress: () => {
+                            setScanned(false);
+                            setModalActive(false);
+                        } }
                     ],
                     { cancelable: false }
                 );
@@ -109,7 +114,7 @@ export default function ScannerQR() {
     return (
         <View style={styles.container}>
             <Text style={styles.textAbsolute}>Aponte a câmera para o QRCode no convite.</Text>
-
+            
             {/* MODAL */}
             <Modal animationType="slide" visible={modalActive} >
                 <View style={styles.modalContainer}>
@@ -225,7 +230,7 @@ export default function ScannerQR() {
                 style={StyleSheet.absoluteFillObject}
             />
 
-            {loading ? (<ActivityIndicator size={64} color={minhasCores.color3} />) : (scanned && <Button title={'Escanear outro selo'} onPress={() => setScanned(false)} />)}
+            {loading ? (<ActivityIndicator size={64} color={minhasCores.color3} />) : (scanned && <Button title={'Escanear outro convite'} onPress={() => setScanned(false)} />)}
 
         </View>
     );
