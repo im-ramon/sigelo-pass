@@ -42,7 +42,7 @@ export const style = StyleSheet.create({
         justifyContent: 'center',
     },
     btnImprimirText: {
-        color: minhascores.light,
+        color: minhascores.white,
         fontWeight: 'bold',
         fontSize: 16,
         marginRight: 10,

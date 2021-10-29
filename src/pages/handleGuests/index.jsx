@@ -24,7 +24,7 @@ export default function handleGuests() {
     const { pageName } = useContext(AppContext);
 
     async function listarUsuarios() {
-        await firebase.database().ref('guest').on('value', snapshot => {
+        firebase.database().ref('guest').on('value', snapshot => {
             let guestList = []
             setAllGuests([])
             snapshot.forEach(itens => {
@@ -53,7 +53,7 @@ export default function handleGuests() {
     }, [])
 
     useEffect(() => {
-        search === '' ? setFilterGuests(allGuests) : search != null && setFilterGuests(allGuests.filter(item => item.nomeCompleto.toLowerCase().indexOf(search.toLowerCase()) > -1 || item.representante.toLowerCase().indexOf(search.toLowerCase()) > -1))
+        search === '' ? setFilterGuests(allGuests) : search != null && (setFilterGuests(allGuests.filter(item => item.nomeCompleto.toLowerCase().indexOf(search.toLowerCase()) > -1 || item.representante.toLowerCase().indexOf(search.toLowerCase()) > -1 || item.cargo.toLowerCase().indexOf(search.toLowerCase()) > -1)))
     }, [search])
 
 
@@ -77,19 +77,21 @@ export default function handleGuests() {
                 <Container>
 
                     <CabecalhoPages>{pageName == 'allGuests' ? 'Todos os convidados' : 'Confirmar presença'}</CabecalhoPages>
+                    <View style={localStyle.flatListConteiner}>
+                        {loadingList ?
 
-                    {loadingList ?
+                            (<ActivityIndicator color={minhasCores.color3} size={45} />)
 
-                        (<ActivityIndicator color={minhasCores.color3} size={45} />)
-
-                        : (
-                            <FlatList
-                                keyExtractor={item => item.key}
-                                data={filterGuests}
-                                renderItem={({ item }) => (<Lista data={item} />)}
-                            />
-
-                        )}
+                            : (
+                                <FlatList
+                                    keyExtractor={item => item.key}
+                                    data={filterGuests}
+                                    showsVerticalScrollIndicator={false}
+                                    style={localStyle.flatList}
+                                    renderItem={({ item }) => (<Lista data={item} />)}
+                                />
+                            )}
+                    </View>
 
                 </Container>
             </ImageBackground>
@@ -97,4 +99,15 @@ export default function handleGuests() {
     );
 }
 
+const localStyle = StyleSheet.create({
+    flatListConteiner: {
+        width: '85%',
+        flex: 1,
+        justifyContent: 'center'
+    },
+    flatList: {
+        width: '100%',
+        flex: 1,
+    }
+})
 

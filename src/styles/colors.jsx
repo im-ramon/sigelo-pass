@@ -8,8 +8,11 @@ const cores = {
     color7: "#e1e1e1",
 
     success: '#28a745',
+    success_light: '#79cc8c',
     danger: '#dc3545',
+    danger_light: '#e2636f',
     warning: '#ffc107',
+    warning_light: '#fddb73',
     info: '#17a2b8',
     light: '#dedede',
     white: '#ffffff',

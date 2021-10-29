@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, ActivityIndicator, Alert, Switch } from 'react-native'
-import { Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign, Octicons } from '@expo/vector-icons';
 import { AreaInput, Background, Container, Input, Logo, SubmitButton, SubmitText, Link, LinkText, CabecalhoPages } from '../../styles/styles';
 import { style } from './style'
 import firebase from '../../services/firebaseConnection';
@@ -119,19 +119,19 @@ export default function Lista({ data }) {
     return (
         <View style={LocalStyle.container}>
 
-            <View style={LocalStyle.header}>
-                <Text style={LocalStyle.textHeader}>{`${data.nomeCompleto}`}</Text>
-            </View>
-
             <View style={LocalStyle.sectionGuestData}>
-                <Text style={LocalStyle.textDestaque}>Representado por: <Text style={LocalStyle.textSimples}>{data.representante}</Text></Text>
-                <Text style={LocalStyle.textDestaque}>Cargo/ Função: <Text style={LocalStyle.textSimples}>{data.cargo}</Text></Text>
-                <Text style={LocalStyle.textDestaque}>Veículo: <Text style={LocalStyle.textSimples}>{data.modelo}</Text></Text>
-                <Text style={LocalStyle.textDestaque}>Placa: <Text style={LocalStyle.textSimples}>{data.placa}</Text></Text>
-                <Text style={LocalStyle.textDestaque}>Observações: <Text style={LocalStyle.textSimples}>{data.observacoes}</Text></Text>
-                <Text style={{ ...LocalStyle.textSimplesPresente, backgroundColor: data.presente == 'sim' ? minhasCores.success : minhasCores.warning}}>
-                    {data.presente == 'sim' ? 'Convidado presente' : 'Convidado ainda não chegou'}
-                </Text>
+                <Text style={LocalStyle.textSimples}>Nome: <Text style={LocalStyle.textDestaque}>{`${data.nomeCompleto}`}</Text></Text>
+                <Text style={LocalStyle.textSimples}>Representado por: <Text style={LocalStyle.textDestaque}>{data.representante}</Text></Text>
+                <Text style={LocalStyle.textSimples}>Cargo/ Função: <Text style={LocalStyle.textDestaque}>{data.cargo}</Text></Text>
+                <Text style={LocalStyle.textSimples}>Veículo: <Text style={LocalStyle.textDestaque}>{data.modelo}</Text></Text>
+                <Text style={LocalStyle.textSimples}>Placa: <Text style={LocalStyle.textDestaque}>{data.placa}</Text></Text>
+                <Text style={LocalStyle.textSimples}>Observações: <Text style={LocalStyle.textDestaque}>{data.observacoes}</Text></Text>
+                <View style={{ ...LocalStyle.textSimplesPresenteArea, backgroundColor: data.presente == 'sim' ? minhasCores.success_light : minhasCores.warning_light }}>
+                    <Text style={LocalStyle.textSimplesPresente}>
+                        {data.presente == 'sim' ? 'Convidado presente' : 'Convidado ainda não chegou'}
+                    </Text>
+                        {data.presente == 'sim' ? (<AntDesign name="checkcircleo" size={24} color="black" style={LocalStyle.textSimplesPresenteIcon} />) : (<AntDesign name="closecircleo" style={LocalStyle.textSimplesPresenteIcon} size={24} color="black" />)}
+                </View>
             </View>
 
             <View style={LocalStyle.footer}>
@@ -140,7 +140,7 @@ export default function Lista({ data }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={LocalStyle.btnDelete} onPress={() => { openConfirmDelete() }}>
-                    <AntDesign name="delete" size={24} color="black" />
+                    <Ionicons name="ios-trash-outline" size={24} color="black" />
                 </TouchableOpacity>
 
                 {pageName === 'allGuests' &&
@@ -307,13 +307,15 @@ const LocalStyle = StyleSheet.create({
     container: {
         borderWidth: 2,
         borderRadius: 10,
-        borderColor: minhasCores.color3,
+        borderStyle: 'dashed',
+        borderColor: minhasCores.dark_soft,
         backgroundColor: minhasCores.white,
-        width: 350,
+        width: '100%',
         marginTop: 20,
+        paddingTop: 10,
         paddingBottom: 60,
         paddingHorizontal: 2,
-        marginBottom: 50,
+        marginBottom: 8,
         zIndex: 2,
     },
     header: {
@@ -341,15 +343,24 @@ const LocalStyle = StyleSheet.create({
         fontWeight: '100',
         fontSize: 14
     },
-    textSimplesPresente: {
+    textSimplesPresenteArea: {
         borderColor: minhasCores.dark_soft,
+        flexDirection: 'row',
         borderWidth: 2,
-        color: minhasCores.dark,
-        fontWeight: '100',
-        fontSize: 16,
-        height: 25,
+        height: 45,
         marginTop: 10,
         borderRadius: 10,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    textSimplesPresenteIcon: {
+        marginLeft: 8,
+    },
+    textSimplesPresente: {
+        color: minhasCores.black,
+        fontWeight: '100',
+        fontSize: 16,
         textAlign: 'center',
     },
     sectionGuestData: {
@@ -359,7 +370,7 @@ const LocalStyle = StyleSheet.create({
         overflow: 'hidden'
     },
     btnEdit: {
-        backgroundColor: minhasCores.success,
+        backgroundColor: minhasCores.success + 'dd',
         flex: 1,
         height: 50,
         alignItems: 'center',
@@ -369,7 +380,7 @@ const LocalStyle = StyleSheet.create({
         borderWidth: 3, borderRadius: 11,
     },
     btnDelete: {
-        backgroundColor: minhasCores.danger,
+        backgroundColor: minhasCores.danger_light,
         flex: 1,
         height: 50,
         alignItems: 'center',
