@@ -1,38 +1,22 @@
-import React, { useState, useContext } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, ActivityIndicator, Alert, Switch } from 'react-native'
-import { Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign } from '@expo/vector-icons';
-import { AreaInput, Background, Container, Input, Logo, SubmitButton, SubmitText, Link, LinkText, CabecalhoPages } from '../../styles/styles';
+import React, { useState } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons';
 import minhasCores from '../../styles/colors'
-import * as Print from 'expo-print';
 
 export default function Lista({ data }) {
-
-    const [loading, setLoading] = useState(false)
-
-    function makeHTML() {
-        const tamanhoQRCode = 500
-        let HTML = `
-            <div style="display: flex; padding: 1em; width: 21cm; flex-wrap: wrap;">
-                <div style="width: 30%; display: flex; justify-content: center; align-items: center; flex-direction: column; border: 3px dashed #00000030; margin: .2em;">
-                    <img src="https://chart.googleapis.com/chart?chs=${tamanhoQRCode}x${tamanhoQRCode}&cht=qr&chl=${key}" width="100%">
-                    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; background-color: #00000015; width: 100%;">
-                        <p style="line-height: 0cm;">${nomeCompleto}</p>
-                    </div>
-                </div>
-            </div>
-            `
-        return HTML
-    }
-
     return (
         data.presente == 'sim' && (
             <View style={localStyle.container}>
-                <Text>{`${data.nomeCompleto}`}</Text>
-                <Text>Representado por: <Text>{data.representante}</Text></Text>
-                <Text>Cargo/ Função: <Text>{data.cargo}</Text></Text>
-                <Text>Veículo: <Text>{data.modelo}</Text></Text>
-                <Text>Placa: <Text>{data.placa}</Text></Text>
-                <Text>Observações: <Text>{data.observacoes}</Text></Text>
+                <View style={localStyle.guestDataArea}>
+                    <Text style={localStyle.textFit}>Convidado: <Text style={localStyle.textStrong}>{`${data.nomeCompleto}`}</Text></Text>
+                    <Text style={localStyle.textFit}>Representado por: <Text style={localStyle.textStrong}>{data.representante}</Text></Text>
+                    <Text style={localStyle.textFit}>Cargo/ Função: <Text style={localStyle.textStrong}>{data.cargo}</Text></Text>
+                    <Text style={localStyle.textFit}>Observações: <Text style={localStyle.textStrong}>{data.observacoes}</Text></Text>
+                </View>
+
+                <View style={localStyle.guestIconArea}>
+                    <MaterialIcons name="verified" size={64} color={minhasCores.success} />
+                </View>
             </View >
         )
     )
@@ -40,7 +24,34 @@ export default function Lista({ data }) {
 
 const localStyle = StyleSheet.create({
     container: {
-        backgroundColor: minhasCores.success,
+        flex: 1,
+        backgroundColor: minhasCores.dark_soft,
+        width: '100%',
+        flexDirection: 'row',
         marginBottom: 10,
+        paddingHorizontal: 25,
+        paddingVertical: 10,
+        borderColor: '#cacaca',
+        borderWidth: 2,
+        borderStyle: 'dashed',
+        borderRadius: 15,
     },
+    guestDataArea: {
+        flex: 4,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    },
+    guestIconArea: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textStrong: {
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    textFit: {
+        fontSize: 16,
+        fontWeight: 'normal',
+    }
 })

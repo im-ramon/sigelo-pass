@@ -6,8 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import { style } from './style'
 import { Picker } from '@react-native-picker/picker'
 import firebase from '../../services/firebaseConnection'
-import { arrayPostGrad, cores } from './listas'
-import ModalConfirm from './ModalConfirm'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import minhascores from '../../styles/colors';
 
@@ -23,7 +21,6 @@ export default function AddGuest() {
     const [placa, setPlaca] = useState('')
     const [observacoes, setObservacoes] = useState('')
 
-    const [modalActive, setModalActive] = useState(false)
     const [loadingUpdate, setLoadingUpdate] = useState(false)
 
     const regexPlate = /^[A-Za-z]{3}([0-9]{1}[A-Za-z]{1}[0-9]{2}|[0-9]{4}$)/
@@ -185,7 +182,6 @@ export default function AddGuest() {
                                 </SubmitButton>
                             )
                         }
-                        {modalActive == true ? <ModalConfirm /> : <Text></Text>}
 
                     </ScrollView>
                 </Container>

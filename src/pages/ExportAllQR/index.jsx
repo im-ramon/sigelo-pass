@@ -5,7 +5,6 @@ import Slider from '@react-native-community/slider';
 import { AntDesign } from '@expo/vector-icons';
 import { style } from './style';
 import firebase from '../../services/firebaseConnection';
-import { cores, arrayPostGrad } from '../AddGuest/listas';
 import * as Print from 'expo-print';
 import minhasCores from '../../styles/colors';
 
