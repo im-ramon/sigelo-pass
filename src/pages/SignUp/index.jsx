@@ -14,13 +14,10 @@ export default function SignUp() {
 
     const navigation = useNavigation();
 
-    const [nomeUser, setNomeUser] = useState('')
-    const [sobrenomeUser, setSobrenomeUser] = useState('')
-    const [emailUser, setEmailUser] = useState('')
-    const [senhaUser, setSenhaUser] = useState('')
-    const [repeatSenhaUser, setRepeatSenhaUser] = useState('')
-    const [senhaAdm, setSenhaAdm] = useState('')
-    const [tipoUser, setTipoUser] = useState('99')
+    const [userName, setUserName] = useState('')
+    const [userEmail, setUserEmail] = useState('')
+    const [userPassword, setUserPassword] = useState('')
+    const [repeatUserPassword, setRepeatUserPassword] = useState('')
 
     const [loading, setLoading] = useState(false)
 
@@ -65,10 +62,10 @@ export default function SignUp() {
                             placeholder="Nome"
                             autoCorrect={false}
                             autoCapitalize="none"
-                            value={nomeUser}
-                            onChangeText={text => setNomeUser(text)}
+                            value={userName}
+                            onChangeText={text => setUserName(text)}
                         />
-                        <Ionicons name={nomeUser && nomeUser.length >= 2 ? "checkmark" : "close"} size={20} color={nomeUser === '' ? '#00000000' : (nomeUser && nomeUser.length >= 2 ? cores.success : cores.danger)} style={{ marginLeft: -5 }} />
+                        <Ionicons name={userName && userName.length >= 2 ? "checkmark" : "close"} size={20} color={userName === '' ? '#00000000' : (userName && userName.length >= 2 ? cores.success : cores.danger)} style={{ marginLeft: -5 }} />
                     </AreaInput>
 
                     <AreaInput>
@@ -78,10 +75,10 @@ export default function SignUp() {
                             autoCorrect={false}
                             keyboardType="email-address"
                             autoCapitalize="none"
-                            value={emailUser}
-                            onChangeText={text => setEmailUser(text)}
+                            value={userEmail}
+                            onChangeText={text => setUserEmail(text.toLowerCase())}
                         />
-                        <Ionicons name={!validacaoEmail.test(emailUser) ? "close" : "checkmark"} size={20} color={emailUser === '' ? '#00000000' : (!validacaoEmail.test(emailUser) ? cores.danger : cores.success)} />
+                        <Ionicons name={!validacaoEmail.test(userEmail) ? "close" : "checkmark"} size={20} color={userEmail === '' ? '#00000000' : (!validacaoEmail.test(userEmail) ? cores.danger : cores.success)} />
                     </AreaInput>
 
                     <AreaInput>
@@ -90,11 +87,11 @@ export default function SignUp() {
                             placeholder="Senha"
                             autoCorrect={false}
                             autoCapitalize="none"
-                            value={senhaUser}
-                            onChangeText={text => setSenhaUser(text)}
+                            value={userPassword}
+                            onChangeText={text => setUserPassword(text)}
                             secureTextEntry={true}
                         />
-                        <Ionicons name={senhaUser.length <= 7 ? "close" : "checkmark"} size={20} color={senhaUser == '' ? '#00000000' : (senhaUser.length <= 7 ? cores.danger : cores.success)} style={{ marginLeft: -5 }} />
+                        <Ionicons name={userPassword.length <= 7 ? "close" : "checkmark"} size={20} color={userPassword == '' ? '#00000000' : (userPassword.length <= 7 ? cores.danger : cores.success)} style={{ marginLeft: -5 }} />
                     </AreaInput>
                     
                      <AreaInput>
@@ -103,11 +100,11 @@ export default function SignUp() {
                             placeholder="Confirma sua senha"
                             autoCorrect={false}
                             autoCapitalize="none"
-                            value={repeatSenhaUser}
-                            onChangeText={text => setRepeatSenhaUser(text)}
+                            value={repeatUserPassword}
+                            onChangeText={text => setRepeatUserPassword(text)}
                             secureTextEntry={true}
                         />
-                        <Ionicons name={repeatSenhaUser != senhaUser ? "close" : "checkmark"} size={20} color={repeatSenhaUser == '' ? '#00000000' : (repeatSenhaUser != senhaUser ? cores.danger : cores.success)} style={{ marginLeft: -5 }} />
+                        <Ionicons name={repeatUserPassword != userPassword ? "close" : "checkmark"} size={20} color={repeatUserPassword == '' ? '#00000000' : (repeatUserPassword != userPassword ? cores.danger : cores.success)} style={{ marginLeft: -5 }} />
                     </AreaInput>
 
                     {loading ?
@@ -115,9 +112,9 @@ export default function SignUp() {
                         :
                         (
                             <SubmitButton onPress={() => {
-                                if (!!validacaoEmail.test(emailUser) && senhaUser.length >= 8 && !!nomeUser && !!sobrenomeUser && !!tipoUser && repeatSenhaUser === senhaUser) {
+                                if (!!validacaoEmail.test(userEmail) && userPassword.length >= 8 && !!userName && repeatUserPassword === userPassword) {
                                     setLoading(true)
-                                    signUp(emailUser, senhaUser, nomeUser, sobrenomeUser, tipoUser)
+                                    signUp(userEmail, userName, userPassword)
                                     setLoading(false)
                                     alert('success')
                                 } else {

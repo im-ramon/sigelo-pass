@@ -132,11 +132,11 @@ function AppRoutes() {
                     headerShown: true,
                     title: 'Voltar',
                     headerStyle: {
-                        backgroundColor: minhascores.color1,
-                        borderBottomColor: '#F27405',
+                        backgroundColor: minhascores.white,
+                        borderBottomColor: minhascores.color3,
                         borderBottomWidth: 2
                     },
-                    headerTintColor: '#fff',
+                    headerTintColor: minhascores.color5,
 
                 }}
             />

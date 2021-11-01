@@ -19,7 +19,6 @@ function Routes() {
     }
 
     return (
-        
         signed ? <AuthRoutes /> : <AppContextProvider><AppRoutes /></AppContextProvider>
     );
 }

@@ -7,13 +7,15 @@ export const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(false);
     const [loading, setLoading] = useState(true)
+    const [authorized, setAuthorized] = useState(false)
 
     function cathError(error) {
         Alert.alert(
             `Ocorreu um erro.`,
             `Verifique os dados digitados e tente novamente.\n\nDescrição do erro:${error}`,
+            `Verifique os dados digitados e tente novamente.\n\nCertamente o seu cadastro ainda não foi aprovado. Aguarde a aprovação pelo administrador do evento para prosseguir.`,
             [
                 { text: "Verificar", onPress: () => console.log('erro') }
             ],
@@ -40,13 +42,18 @@ function AuthProvider({ children }) {
         setLoading(true)
         await firebase.auth().signInWithEmailAndPassword(email, password)
             .then(async (value) => {
-                let uid = { 
-                    userId: value.user.uid,
-                    nome: 'User test'
-                };
-                setUser(uid)
-                keepConnected && storageUser(uid)
-                setLoading(false)
+                let uid = value.user.uid;
+                await firebase.database().ref('usersAuth').child(uid).once('value')
+                    .then((snapshot) => {
+                        let data = {
+                            uid,
+                            nome: snapshot.val().userName,
+                            email: snapshot.val().userEmail,
+                        };
+                        setUser(data);
+                        keepConnected && storageUser(data)
+                        setLoading(false)
+                    })
             })
             .catch((error) => {
                 cathError(error)
@@ -55,12 +62,12 @@ function AuthProvider({ children }) {
     }
 
     //cadastrar usuário
-    async function signUp(email, password, nome, sobrenome, tipoUser) {
-        await firebase.auth().createUserWithEmailAndPassword(email, password)
+    async function signUp(userEmail, userName, userPassword) {
+        await firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword)
             .then(async (value) => {
                 let uid = value.user.uid;
                 await firebase.database().ref('tempUsers').child(uid).set({
-                    email, nome, sobrenome, tipoUser
+                    userEmail, userName
                 })
                     .catch((error) => {
                         alert(error.code)

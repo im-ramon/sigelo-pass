@@ -44,7 +44,8 @@ export default function Home() {
                     </TouchableOpacity>
                 </View>
 
-                <Text style={style.textWelcome}>Bem vindo, {user.nome}!</Text>
+                <Text style={style.textWelcome}>Bem vindo, {user.nome.split(' ')[0]}!</Text>
+                {/* <Text style={style.textWelcome}>Bem vindo, {user.nome}!</Text> */}
 
                 <View style={style.toggleTypeEventArea}>
                     <TouchableOpacity style={{ ...style.btnToggleTypeEventArea, backgroundColor: eventType === '0' ? minhasCores.color5 : '#ffffff10' }} onPress={() => { setEventType('0') }}>
@@ -108,7 +109,7 @@ export default function Home() {
                         )}
 
                         {(eventType === '2' || eventType === '0') && (
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Approver') }}>
+                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Profiles') }}>
                                 <View style={{ ...style.icon, backgroundColor: '#fef5f0' }}>
                                     <FontAwesome5 name="users-cog" size={32} color={'#f69b63'} />
                                 </View>
@@ -125,14 +126,14 @@ export default function Home() {
                             </TouchableOpacity>
                         )}
 
-                        {(eventType === '2' || eventType === '0') && (
+                        {/* {(eventType === '2' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Approver') }}>
                                 <View style={{ ...style.icon, backgroundColor: '#f8f8c4' }}>
                                     <FontAwesome5 name="users-cog" size={32} color={'#999901'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Gerenciar controladores</Text>
                             </TouchableOpacity>
-                        )}
+                        )} */}
 
                     </View>
                 </ScrollView>
