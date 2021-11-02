@@ -1,66 +1,149 @@
 import React, { useState, useContext } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, ActivityIndicator, Alert } from 'react-native'
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { AreaInput, Background, Container, Input, Logo, SubmitButton, SubmitText, Link, LinkText, styles } from '../../styles/styles';
 import { Picker } from '@react-native-picker/picker'
 import { style } from './style'
 import firebase from '../../services/firebaseConnection';
 import { AppContext } from '../../contexts/appContexts';
+import { AuthContext } from '../../contexts/auth'
 import minhascores from '../../styles/colors'
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Lista({ data }) {
 
+    const { user } = useContext(AuthContext);
+
     const [key, setKey] = useState(data.key)
     const [email, setEmail] = useState(data.email)
     const [nome, setNome] = useState(data.nome)
-    const [sobrenome, setSobrenome] = useState(data.sobrenome)
-    const [tipoUser, setTipoUser] = useState(data.tipoUser)
+    const [pass, setPass] = useState(data.pass)
 
-    const perfil = ['dev', 'Administrador', 'Operador', 'Fiscalizador']
+    function myAlert(type, key, email, nome) {
 
-    function myAlert(key) {
-        Alert.alert(
-            "Atenção",
-            `Ao confirmar, você estará excluíndo definitivamente este perfil.\n\nDeseja continuar?`,
-            [
-                {
-                    text: "Voltar",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                },
-                { text: "Confirmar", onPress: () => deleteOnFirebase(key) }
-            ],
-            { cancelable: false }
-        );
+        if (type == 'aproveRequest') {
+            Alert.alert(
+                "Atenção",
+                `Ao confirmar, você estará concedendo ao usuário acesso ao aplicativo. \n\nDeseja continuar?`,
+                [
+                    {
+                        text: "Voltar",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                    },
+                    { text: "Confirmar", onPress: () => aproverOnFirebase(key, email, nome) }
+                ],
+                { cancelable: false }
+            );
+            return;
+        }
+
+        if (type == 'deleteRequest') {
+            Alert.alert(
+                "Atenção",
+                `Ao confirmar, você estará rejeitando a solicitação de acesso ao aplicativo. \n\nDeseja continuar?`,
+                [
+                    {
+                        text: "Voltar",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                    },
+                    { text: "Confirmar", onPress: () => deleteOnFirebase(key, 'tempUsers') }
+                ],
+                { cancelable: false }
+            );
+            return;
+        }
+
+        if (type == 'deleteUser') {
+            Alert.alert(
+                "Atenção",
+                `Ao confirmar, você estará excluindo o usuário do seu aplicativo. \n\nDeseja continuar?`,
+                [
+                    {
+                        text: "Voltar",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                    },
+                    { text: "Confirmar", onPress: () => deleteOnFirebase(key, 'usersAuth') }
+                ],
+                { cancelable: false }
+            );
+            return;
+        }
+
+        if (type == 'blockUser') {
+            Alert.alert(
+                "Atenção",
+                `Ao confirmar, você estará bloqueando o usuário do seu aplicativo. \n\nDeseja continuar?`,
+                [
+                    {
+                        text: "Voltar",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                    },
+                    { text: "Confirmar", onPress: () => blockOnFirebase(key, email, nome) }
+                ],
+                { cancelable: false }
+            );
+            return;
+        }
     }
 
-    async function deleteOnFirebase(key) {
-        await firebase.database().ref('users').child(key).remove()
+    async function aproverOnFirebase(key, email, nome) {
+        deleteOnFirebase(key, 'tempUsers').then(()=>{
+            firebase.database().ref('usersAuth').child(key).set({ userEmail: email, userName: nome })
+        })
     }
+
+    async function blockOnFirebase(key, email, nome) {
+        deleteOnFirebase(key, 'usersAuth').then(()=>{
+            firebase.database().ref('tempUsers').child(key).set({ userEmail: email, userName: nome })
+        })
+    }
+
+    async function deleteOnFirebase(key, node) {
+        await firebase.database().ref(node).child(key).remove()
+    }
+
+
 
     return (
-        tipoUser != '0' && tipoUser != '-1' ?
-            <View style={LocalStyle.container}>
-                <View style={LocalStyle.header}>
-                    <LinearGradient colors={['transparent', '#00000035']} style={LocalStyle.linearGradient} />
-                    <Text style={LocalStyle.textHeader}>{nome + ' ' + sobrenome}</Text>
-                </View>
+        user.uid != data.key && 
+        <View style={LocalStyle.container}>
+            <View style={LocalStyle.sectionDadosCarro}>
+                <Text style={LocalStyle.textDestaque}>Operador: <Text style={LocalStyle.textSimples}>{nome}</Text></Text>
+                <Text style={LocalStyle.textDestaque}>E-mail: <Text style={LocalStyle.textSimples}>{email}</Text></Text>
+                <Text style={LocalStyle.textDestaque}>Tipo de usário: <Text style={LocalStyle.textSimples}>{pass ? 'Usuário aprovado' : 'Usuário aguardando aprovação'}</Text></Text>
+            </View>
 
-                <View style={LocalStyle.sectionDadosCarro}>
-                    <Text style={LocalStyle.textDestaque}>E-mai: <Text style={LocalStyle.textSimples}>{email}</Text></Text>
-                    <Text style={LocalStyle.textDestaque}>Perfil: <Text style={LocalStyle.textSimples}>{perfil[tipoUser]}</Text></Text>
-                </View>
+            <View style={LocalStyle.footer}>
+                {pass &&
+                    <TouchableOpacity style={{ ...LocalStyle.btn, backgroundColor: minhascores.warning_light }} onPress={() => { myAlert('blockUser', key, email, nome) }}>
+                        <MaterialIcons name="block" size={24} color="black" />
+                    </TouchableOpacity>
+                }
 
-                <View style={LocalStyle.footer}>
-                    <TouchableOpacity style={LocalStyle.btnDelete} onPress={() => { myAlert(key) }}>
-                        <LinearGradient colors={['transparent', '#00000050']} style={LocalStyle.linearGradient} />
+                {pass &&
+                    <TouchableOpacity style={{ ...LocalStyle.btn, backgroundColor: minhascores.danger_light }} onPress={() => { myAlert('deleteUser', key, email, nome) }}>
                         <AntDesign name="delete" size={24} color="black" />
                     </TouchableOpacity>
-                </View>
+                }
+
+                {!pass &&
+                    <TouchableOpacity style={{ ...LocalStyle.btn, backgroundColor: minhascores.danger_light }} onPress={() => { myAlert('deleteRequest', key, email, nome) }}>
+                        <AntDesign name="delete" size={24} color="black" />
+                    </TouchableOpacity>
+                }
+
+                {!pass &&
+                    <TouchableOpacity style={{ ...LocalStyle.btn, backgroundColor: minhascores.success_light }} onPress={() => { myAlert('aproveRequest', key, email, nome) }}>
+                        <AntDesign name="checkcircleo" size={24} color="black" />
+                    </TouchableOpacity>
+                }
+
             </View>
-            :
-            false
+        </View>
     )
 }
 
@@ -68,12 +151,14 @@ const LocalStyle = StyleSheet.create({
     container: {
         borderWidth: 2,
         borderRadius: 10,
-        borderColor: '#3C74A6',
-        backgroundColor: `${minhascores.color1}`,
-        width: 350,
+        borderStyle: 'dashed',
+        borderColor: minhascores.dark_soft,
+        backgroundColor: minhascores.white,
         marginTop: 20,
+        paddingTop: 10,
         paddingBottom: 60,
-        marginBottom: 50,
+        paddingHorizontal: 2,
+        marginBottom: 8,
         zIndex: 2,
     },
     header: {
@@ -92,13 +177,12 @@ const LocalStyle = StyleSheet.create({
         marginVertical: 5,
     },
     textDestaque: {
-        color: '#3C74A6',
-        fontWeight: 'bold',
+        color: minhascores.color5,
         fontSize: 16
     },
     textSimples: {
-        color: '#dedede',
-        fontWeight: '100',
+        color: minhascores.dark,
+        fontWeight: 'bold',
         fontSize: 14
     },
     sectionDadosCarro: {
@@ -107,23 +191,13 @@ const LocalStyle = StyleSheet.create({
         paddingBottom: 10,
         overflow: 'hidden'
     },
-    btnEdit: {
-        backgroundColor: minhascores.success,
-        width: '50%',
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderColor: '#121212',
-        borderLeftWidth: 3,
-        borderWidth: 3, borderRadius: 11,
-    },
-    btnDelete: {
+    btn: {
         backgroundColor: minhascores.danger,
-        width: '100%',
         height: 50,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        borderColor: '#121212',
+        borderColor: minhascores.dark_soft,
         borderWidth: 3, borderRadius: 11,
     },
     footer: {
@@ -132,7 +206,7 @@ const LocalStyle = StyleSheet.create({
         textAlign: 'center',
         color: '#dedede',
         fontSize: 18,
-        backgroundColor: minhascores.color1,
+        backgroundColor: minhascores.white,
         position: 'absolute',
         bottom: 0,
         alignSelf: 'center',
@@ -149,23 +223,23 @@ const LocalStyle = StyleSheet.create({
     }
 })
 
-const styleModal = StyleSheet.create({
-    modalContainer: {
-        backgroundColor: '#141414',
-        flex: 1,
-        paddingHorizontal: 10,
-    },
-    header: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        marginLeft: 10,
-        marginTop: 13,
-        backgroundColor: '#141414',
-        flexDirection: 'row'
-    },
-    modalBody: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 12,
-    },
-})
+// const styleModal = StyleSheet.create({
+//     modalContainer: {
+//         backgroundColor: minhascores.light,
+//         flex: 1,
+//         paddingHorizontal: 10,
+//     },
+//     header: {
+//         flex: 1,
+//         justifyContent: 'flex-start',
+//         marginLeft: 10,
+//         marginTop: 13,
+//         backgroundColor: '#141414',
+//         flexDirection: 'row'
+//     },
+//     modalBody: {
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//         flex: 12,
+//     },
+// })
