@@ -21,6 +21,8 @@ export default function PassawordReset() {
     const validacaoEmail = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)$/
 
     function resetEmail(emailAddress) {
+        firebase.auth().languageCode = 'pt-BR'
+        
         firebase.auth().sendPasswordResetEmail(emailAddress).then(function () {
             myalert('success', '_')
         }).catch(function (error) {

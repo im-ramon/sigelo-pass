@@ -39,10 +39,10 @@ export default function GenerateGuestList() {
 
         allGuests.forEach((item, index) => {
             if (item.presente === 'sim') {
-                i++;
+                // i++;
                 html = html + `
-                            <tr ${index % 2 == 0 ? 'style="background: rgb(218, 218, 218);"' : ''}>
-                            <td style="border: 1px solid black;padding: 2px 4px; text-align: center;">${index + 1}</td>
+                            <tr ${index % 2 == 0 && index !== 0 ? 'style="background: rgb(218, 218, 218);"' : ''}>
+                            <td style="border: 1px solid black;padding: 2px 4px; text-align: center;">${++i}</td>
                             <td style="border: 1px solid black;padding: 2px 4px; text-align: left;">${item.nomeCompleto}</td>
                             <td style="border: 1px solid black;padding: 2px 4px; text-align: left;">${item.representante}</td>
                             <td style="border: 1px solid black;padding: 2px 4px; text-align: left;">${item.cargo}</td>
