@@ -19,11 +19,6 @@ export default function Home() {
     const [eventType, setEventType] = useState('0');
     const [modalActive, setModalActive] = useState(false);
 
-    // Isso aqui pode quebrar o App no futura, ATENÇÃO!!!!
-    const appJSON = require('../../../app.json')
-    // Isso aqui pode quebrar o App no futura, ATENÇÃO!!!!
-
-
     const navigateTo = (pageNameNav) => {
         setPageName(pageNameNav)
         navigation.navigate('handleGuests')
@@ -156,7 +151,7 @@ export default function Home() {
                         </View>
 
                         <View style={modalStyle.main}>
-                            <Text style={modalStyle.textVersion}>Versão {appJSON.expo.version}</Text>
+                            <Text style={modalStyle.textVersion}>Versão 1.0.0</Text>
                             <Text style={modalStyle.textVersion}>Desenvolvido por Ramon Oliveira</Text>
                             <Text style={modalStyle.textVersion}>www.ramonoliveira.dev</Text>
                             <Text style={{ ...modalStyle.textVersion, marginTop: 24 }}>Suporte: contato@ramonoliveira.dev</Text>
