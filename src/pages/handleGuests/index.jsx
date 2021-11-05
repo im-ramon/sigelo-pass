@@ -103,7 +103,8 @@ const localStyle = StyleSheet.create({
     flatListConteiner: {
         width: '85%',
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingBottom: 50,
     },
     flatList: {
         width: '100%',

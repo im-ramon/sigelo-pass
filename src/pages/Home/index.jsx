@@ -151,7 +151,7 @@ export default function Home() {
                         </View>
 
                         <View style={modalStyle.main}>
-                            <Text style={modalStyle.textVersion}>Versão 1.0.0</Text>
+                            <Text style={modalStyle.textVersion}>Versão 1.0.1</Text>
                             <Text style={modalStyle.textVersion}>Desenvolvido por Ramon Oliveira</Text>
                             <Text style={modalStyle.textVersion}>www.ramonoliveira.dev</Text>
                             <Text style={{ ...modalStyle.textVersion, marginTop: 24 }}>Suporte: contato@ramonoliveira.dev</Text>
@@ -305,7 +305,8 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 25,
-        padding: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 60,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

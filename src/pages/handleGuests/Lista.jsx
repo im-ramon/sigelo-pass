@@ -130,7 +130,7 @@ export default function Lista({ data }) {
                     <Text style={LocalStyle.textSimplesPresente}>
                         {data.presente == 'sim' ? 'Convidado presente' : 'Convidado ainda não chegou'}
                     </Text>
-                        {data.presente == 'sim' ? (<AntDesign name="checkcircleo" size={24} color="black" style={LocalStyle.textSimplesPresenteIcon} />) : (<AntDesign name="closecircleo" style={LocalStyle.textSimplesPresenteIcon} size={24} color="black" />)}
+                    {data.presente == 'sim' ? (<AntDesign name="checkcircleo" size={24} color="black" style={LocalStyle.textSimplesPresenteIcon} />) : (<AntDesign name="closecircleo" style={LocalStyle.textSimplesPresenteIcon} size={24} color="black" />)}
                 </View>
             </View>
 
@@ -199,7 +199,7 @@ export default function Lista({ data }) {
                                 <AreaInput style={style.areaInput}>
                                     <MaterialIcons name="person-pin" size={22} color={minhasCores.color5} />
                                     <Input
-                                        placeholder="Cargo/ Função"
+                                        placeholder="Representado por: "
                                         autoCorrect={false}
                                         autoCapitalize="sentences"
                                         value={representante}
