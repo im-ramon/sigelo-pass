@@ -151,7 +151,7 @@ export default function Home() {
                         </View>
 
                         <View style={modalStyle.main}>
-                            <Text style={modalStyle.textVersion}>Versão 1.0.1</Text>
+                            <Text style={modalStyle.textVersion}>Versão 1.0.2</Text>
                             <Text style={modalStyle.textVersion}>Desenvolvido por Ramon Oliveira</Text>
                             <Text style={modalStyle.textVersion}>www.ramonoliveira.dev</Text>
                             <Text style={{ ...modalStyle.textVersion, marginTop: 24 }}>Suporte: contato@ramonoliveira.dev</Text>

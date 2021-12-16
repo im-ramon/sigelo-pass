@@ -25,7 +25,7 @@ export default function Lista({ data }) {
     //Dados do formulário: 
     const [key, setKey] = useState(data.key)
     const [nomeCompleto, setNomeCompleto] = useState(data.nomeCompleto)
-    const [representante, setrepresentante] = useState(data.representante)
+    const [representante, setRepresentante] = useState(data.representante)
     const [cargo, setCargo] = useState(data.cargo)
     const [tipoConvidado, setTipoConvidado] = useState(data.tipoConvidado)
     const [retrato, setRetrato] = useState(data.retrato)
@@ -86,9 +86,9 @@ export default function Lista({ data }) {
         return HTML
     }
 
-    async function updateOnFirebase(key, nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade) {
+    async function updateOnFirebase(key, nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, presente) {
         setLoadingUpdate(true)
-        await firebase.database().ref('guest').child(key).update({ nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade })
+        await firebase.database().ref('guest').child(key).update({ nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, presente })
             .then(() => {
                 setLoadingUpdate(false)
                 setBtnCor(`${minhasCores.success}`)
@@ -265,6 +265,25 @@ export default function Lista({ data }) {
                                     <Ionicons name={representante.length > 1 ? "checkmark" : "close"} size={20} color={representante === '' ? "#00000000" : (representante.length > 1 ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 10 }} />
                                 </AreaInput>
 
+                                <View style={LocalStyle.confirmPresent}>
+                                    <Text>Convidado presente? </Text>
+
+                                    <View style={LocalStyle.confirmPresentBtnArea}>
+                                        <TouchableOpacity onPress={() => { setPresente('sim') }} style={{ ...LocalStyle.confirmPresentBtn, backgroundColor: presente === 'sim' ? minhasCores.success : minhasCores.dark_soft }}>
+                                            <Text style={LocalStyle.confirmPresentBtnAreaText}>
+                                                SIM
+                                            </Text>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity onPress={() => { setPresente('nao') }} style={{ ...LocalStyle.confirmPresentBtn, backgroundColor: presente === 'nao' ? minhasCores.danger : minhasCores.dark_soft }}>
+                                            <Text style={LocalStyle.confirmPresentBtnAreaText}>
+                                                NÃO
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+
+                                </View>
+
                                 {loadingUpdate ?
 
                                     (<View style={{ marginBottom: 50 }}><ActivityIndicator color={minhasCores.success} size={45} /></View>)
@@ -280,7 +299,7 @@ export default function Lista({ data }) {
 
                                             onPress={() => {
                                                 if (nomeCompleto != '' && cargo != '') {
-                                                    updateOnFirebase(key, nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade)
+                                                    updateOnFirebase(key, nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, presente)
                                                 } else {
                                                     alertFill()
                                                 }
