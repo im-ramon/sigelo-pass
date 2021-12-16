@@ -26,12 +26,12 @@ export default function GenerateGuestList() {
 
     function makeHTML(allGuests, tipo) {
         if (tipo === 's') {
-            let gustesOrd = allGuests.sort(compararAntiguidade)
+            allGuests.sort(compararAntiguidade)
             let i = 0
             let html = `
             <head><title>Convidados presentes</title></head><div>
                 <table style="border-collapse:collapse; width: 18cm; font-family: sans-serif;">
-                    <caption style="font-size: 24px; font-weight: 600;">Convidados presentes</caption>
+                    <caption style="font-size: 24px; font-weight: 600;">Autoridades presentes - Leitura S/3</caption>
                     <thead>
                         <tr style="background: rgb(82, 192, 49);">
                             <th style="border: 1px solid black; padding: 2px 4px; text-align: center;">Ord.</th>
@@ -62,12 +62,12 @@ export default function GenerateGuestList() {
         }
 
         if (tipo === 'p') {
-            let gustesOrd = allGuests.sort(compararAntiguidade)
+            allGuests.sort(compararAntiguidade)
             let i = 0
             let html = `
             <head><title>Convidados presentes</title></head><div>
                 <table style="border-collapse:collapse; width: 18cm; font-family: sans-serif;">
-                    <caption style="font-size: 24px; font-weight: 600;">Convidados presentes</caption>
+                    <caption style="font-size: 24px; font-weight: 600;">Convidados autorizados a acessar o palanque</caption>
                     <thead>
                         <tr style="background: rgb(82, 192, 49);">
                             <th style="border: 1px solid black; padding: 2px 4px; text-align: center;">Nº assento</th>
@@ -95,7 +95,7 @@ export default function GenerateGuestList() {
                 }
             })
 
-            const footer = `</tbody></table><div>Quatitadade presente: ${allGuests.length}</div></div>`
+            const footer = `</tbody></table><div>Quatitadade presente (contando os assentos 4, 5 e 6): ${i}</div></div>`
             return html + footer
         }
     }

@@ -103,7 +103,7 @@ export default function Home() {
                             </TouchableOpacity>
                         )}
 
-                        {(eventType === '2' || eventType === '0') && (
+                        {(eventType === '2' || eventType === '0' || eventType === '1') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { /* navigation.navigate('Profiles') */ alert('Função desabilitada temporariamente.') }}>
                                 <View style={{ ...style.icon, backgroundColor: '#fef5f0' }}>
                                     <FontAwesome5 name="users-cog" size={32} color={'#f69b63'} />
@@ -151,7 +151,7 @@ export default function Home() {
                         </View>
 
                         <View style={modalStyle.main}>
-                            <Text style={modalStyle.textVersion}>Versão 1.0.2</Text>
+                            <Text style={modalStyle.textVersion}>Versão 1.0.3</Text>
                             <Text style={modalStyle.textVersion}>Desenvolvido por Ramon Oliveira</Text>
                             <Text style={modalStyle.textVersion}>www.ramonoliveira.dev</Text>
                             <Text style={{ ...modalStyle.textVersion, marginTop: 24 }}>Suporte: contato@ramonoliveira.dev</Text>

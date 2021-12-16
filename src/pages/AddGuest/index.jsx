@@ -25,7 +25,8 @@ export default function AddGuest() {
     const [loadingUpdate, setLoadingUpdate] = useState(false)
 
     const regexPlate = /^[A-Za-z]{3}([0-9]{1}[A-Za-z]{1}[0-9]{2}|[0-9]{4}$)/
-    const regexAllTexts = /[^A-Z a-z0-9]/gi
+    const regexAllTexts = /[^A-Z a-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/gi
+    // const regexAllTexts = /[^A-Z a-z0-9]/gi
 
     function alertFunc(type) {
         if (type == 'erro') {
