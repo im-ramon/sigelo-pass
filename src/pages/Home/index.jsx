@@ -58,14 +58,14 @@ export default function Home() {
             <View style={style.sectionMaster}>
                 <ScrollView style={style.sectionScrollView}>
                     <View style={style.section}>
-                        {/* {(eventType === '1' || eventType === '0') && (
-                            <TouchableOpacity style={{ ...style.section_btn }} onPress={() => { navigation.navigate('ScannerQR') }}>
+                        {(eventType === '1' || eventType === '0') && (
+                            <TouchableOpacity style={{ ...style.section_btn }} onPress={() => { /* navigation.navigate('ScannerQR') */ alert('Função desabilitada temporariamente.') }}>
                                 <View style={{ ...style.icon, backgroundColor: '#e5f6fc' }}>
                                     <AntDesign name="qrcode" size={48} color={'#3fb5d2'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Escanear convite</Text>
                             </TouchableOpacity>
-                        )} */}
+                        )}
 
                         {(eventType === '1' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('GenerateGuestList') }}>
@@ -104,7 +104,7 @@ export default function Home() {
                         )}
 
                         {(eventType === '2' || eventType === '0') && (
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('Profiles') }}>
+                            <TouchableOpacity style={style.section_btn} onPress={() => { /* navigation.navigate('Profiles') */ alert('Função desabilitada temporariamente.') }}>
                                 <View style={{ ...style.icon, backgroundColor: '#fef5f0' }}>
                                     <FontAwesome5 name="users-cog" size={32} color={'#f69b63'} />
                                 </View>
@@ -113,7 +113,7 @@ export default function Home() {
                         )}
 
                         {(eventType === '2' || eventType === '0') && (
-                            <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('ExportAllQR') }}>
+                            <TouchableOpacity style={style.section_btn} onPress={() => { /* navigation.navigate('ExportAllQR') */ alert('Função desabilitada temporariamente.')}}>
                                 <View style={{ ...style.icon, backgroundColor: '#ffd5d5' }}>
                                     <FontAwesome5 name="file-export" size={32} color={'#bb0e0e'} />
                                 </View>

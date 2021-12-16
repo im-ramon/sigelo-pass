@@ -30,13 +30,14 @@ export default function handleGuests() {
             snapshot.forEach(itens => {
                 let data = {
                     key: itens.key,
-                    cargo: itens.val().cargo,
-                    modelo: itens.val().modelo,
                     nomeCompleto: itens.val().nomeCompleto,
-                    observacoes: itens.val().observacoes,
-                    placa: itens.val().placa,
                     representante: itens.val().representante,
-                    presente: itens.val().presente,
+                    cargo: itens.val().cargo,
+                    tipoConvidado: itens.val().tipoConvidado,
+                    retrato: itens.val().retrato,
+                    leitura: itens.val().leitura,
+                    antiguidade: itens.val().antiguidade,
+                    presente: itens.val().presente
                 }
                 guestList.push(data)
             })

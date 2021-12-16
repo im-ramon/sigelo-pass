@@ -11,6 +11,25 @@ export const style = StyleSheet.create({
         color: '#dedede',
         textAlign: 'center',
     },
+    areaInputPicker: {
+        width: '80%',
+        flexDirection: 'row',
+        flex: 1,
+        alignSelf: 'center',
+        backgroundColor: '#00000015',
+        borderRadius: 22,
+        height: 40,
+        borderColor: '#00000030',
+        borderStyle: 'solid',
+        borderWidth: 2,
+        justifyContent: 'center',
+        alignItems : 'center',
+        marginBottom: 25
+    },
+    picker: {
+        height: 40,
+        width: '90%',
+    },
     imgLogo: {
         width: 150,
         height: 150,

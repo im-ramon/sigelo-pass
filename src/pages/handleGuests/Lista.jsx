@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, ActivityIndicator, Alert, Switch } from 'react-native'
-import { Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign, Octicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome, AntDesign, MaterialIcons, Fontisto } from '@expo/vector-icons';
 import { AreaInput, Background, Container, Input, Logo, SubmitButton, SubmitText, Link, LinkText, CabecalhoPages } from '../../styles/styles';
 import { style } from './style'
 import firebase from '../../services/firebaseConnection';
 import { AppContext } from '../../contexts/appContexts';
 import minhasCores from '../../styles/colors'
+import { Picker } from '@react-native-picker/picker'
 import * as Print from 'expo-print';
 
 export default function Lista({ data }) {
@@ -24,11 +25,12 @@ export default function Lista({ data }) {
     //Dados do formulário: 
     const [key, setKey] = useState(data.key)
     const [nomeCompleto, setNomeCompleto] = useState(data.nomeCompleto)
+    const [representante, setrepresentante] = useState(data.representante)
     const [cargo, setCargo] = useState(data.cargo)
-    const [modelo, setModelo] = useState(data.modelo)
-    const [placa, setPlaca] = useState(data.placa)
-    const [observacoes, setObservacoes] = useState(data.observacoes)
-    const [representante, setRepresentante] = useState(data.representante)
+    const [tipoConvidado, setTipoConvidado] = useState(data.tipoConvidado)
+    const [retrato, setRetrato] = useState(data.retrato)
+    const [leitura, setLeitura] = useState(data.leitura)
+    const [antiguidade, setAntiguidade] = useState(data.antiguidade)
     const [presente, setPresente] = useState(data.presente)
 
     const regexPlate = /^[A-Za-z]{3}([0-9]{1}[A-Za-z]{1}[0-9]{2}|[0-9]{4}$)/
@@ -84,9 +86,9 @@ export default function Lista({ data }) {
         return HTML
     }
 
-    async function updateOnFirebase(key, nomeCompleto, cargo, modelo, representante, placa, observacoes, presente) {
+    async function updateOnFirebase(key, nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade) {
         setLoadingUpdate(true)
-        await firebase.database().ref('guest').child(key).update({ nomeCompleto, cargo, modelo, representante, placa, observacoes, presente })
+        await firebase.database().ref('guest').child(key).update({ nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade })
             .then(() => {
                 setLoadingUpdate(false)
                 setBtnCor(`${minhasCores.success}`)
@@ -120,12 +122,13 @@ export default function Lista({ data }) {
         <View style={LocalStyle.container}>
 
             <View style={LocalStyle.sectionGuestData}>
+                <Text style={LocalStyle.textSimples}>Tioo de convidado: <Text style={LocalStyle.textDestaque}>{data.tipoConvidado == 'autoridade' ? 'Autoridade' : 'Convidado'}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Nome: <Text style={LocalStyle.textDestaque}>{`${data.nomeCompleto}`}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Representado por: <Text style={LocalStyle.textDestaque}>{data.representante}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Cargo/ Função: <Text style={LocalStyle.textDestaque}>{data.cargo}</Text></Text>
-                <Text style={LocalStyle.textSimples}>Veículo: <Text style={LocalStyle.textDestaque}>{data.modelo}</Text></Text>
-                <Text style={LocalStyle.textSimples}>Placa: <Text style={LocalStyle.textDestaque}>{data.placa}</Text></Text>
-                <Text style={LocalStyle.textSimples}>Observações: <Text style={LocalStyle.textDestaque}>{data.observacoes}</Text></Text>
+                <Text style={LocalStyle.textSimples}>Antiguidade: <Text style={LocalStyle.textDestaque}>{data.antiguidade}</Text></Text>
+                <Text style={LocalStyle.textSimples}>Leitura pelo S/3: <Text style={LocalStyle.textDestaque}>{data.leitura == 'sims3' ? 'Sim' : 'Não'}</Text></Text>
+                <Text style={LocalStyle.textSimples}>Autorizado retrato: <Text style={LocalStyle.textDestaque}>{data.retrato == 'simretrato' ? 'Sim' : 'Não'}</Text></Text>
                 <View style={{ ...LocalStyle.textSimplesPresenteArea, backgroundColor: data.presente == 'sim' ? minhasCores.success_light : minhasCores.warning_light }}>
                     <Text style={LocalStyle.textSimplesPresente}>
                         {data.presente == 'sim' ? 'Convidado presente' : 'Convidado ainda não chegou'}
@@ -172,96 +175,94 @@ export default function Lista({ data }) {
                         <Container>
                             <CabecalhoPages>Editar cadastro</CabecalhoPages>
                             <ScrollView style={style.containerScrollView} showsVerticalScrollIndicator={false}>
+
                                 <AreaInput style={style.areaInput}>
-                                    <Ionicons name="person" size={20} color={minhasCores.color5} />
+                                    <Ionicons name="person" size={20} color={minhasCores.color5} style={{ marginLeft: 5 }} />
                                     <Input
-                                        placeholder="Nome completo"
+                                        placeholder="Nome"
                                         autoCorrect={false}
                                         autoCapitalize="sentences"
                                         value={nomeCompleto}
                                         onChangeText={text => setNomeCompleto(text.replace(regexAllTexts, ''))}
                                     />
-                                    <Ionicons name={nomeCompleto.length > 1 ? "checkmark" : "close"} size={20} color={nomeCompleto === '' ? "#00000000" : (nomeCompleto.length > 1 ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 0 }} />
+                                    <Ionicons name={nomeCompleto.length > 1 ? "checkmark" : "close"} size={20} color={nomeCompleto === '' ? "#00000000" : (nomeCompleto.length > 1 ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 10 }} />
                                 </AreaInput>
 
                                 <AreaInput style={style.areaInput}>
-                                    <MaterialIcons name="military-tech" size={22} color={minhasCores.color5} />
+                                    <MaterialIcons name="person-pin" size={22} color={minhasCores.color5} style={{ marginLeft: 5 }} />
                                     <Input
-                                        placeholder="Cargo/ Função"
-                                        autoCorrect={false}
-                                        autoCapitalize="sentences"
-                                        value={cargo}
-                                        onChangeText={text => setCargo(text.replace(regexAllTexts, ''))}
-                                    />
-                                    <Ionicons name={cargo.length > 1 ? "checkmark" : "close"} size={20} color={cargo === '' ? "#00000000" : (cargo.length > 1 ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 0 }} />
-                                </AreaInput>
-
-                                <AreaInput style={style.areaInput}>
-                                    <MaterialIcons name="person-pin" size={22} color={minhasCores.color5} />
-                                    <Input
-                                        placeholder="Representado por: "
+                                        placeholder="Representante"
                                         autoCorrect={false}
                                         autoCapitalize="sentences"
                                         value={representante}
                                         onChangeText={text => setRepresentante(text.replace(regexAllTexts, ''))}
                                     />
-                                    <Ionicons name={cargo.length > 1 ? "checkmark" : "close"} size={20} color={cargo === '' ? "#00000000" : (cargo.length > 1 ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 0 }} />
+                                    <Ionicons name={representante.length > 1 ? "checkmark" : "close"} size={20} color={representante === '' ? "#00000000" : (representante.length > 1 ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 10 }} />
                                 </AreaInput>
 
+
                                 <AreaInput style={style.areaInput}>
-                                    <Ionicons name="car" size={20} color={minhasCores.color5} />
+                                    <MaterialIcons name="military-tech" size={22} color={minhasCores.color5} style={{ marginLeft: 5 }} />
                                     <Input
-                                        placeholder="Modelo do veículo"
+                                        placeholder="Função/ Cargo"
                                         autoCorrect={false}
                                         autoCapitalize="sentences"
-                                        value={modelo}
-                                        onChangeText={text => setModelo(text)}
+                                        value={cargo}
+                                        onChangeText={text => setCargo(text.replace(regexAllTexts, ''))}
                                     />
-                                    <Ionicons name={modelo.length > 1 ? "checkmark" : "close"} size={20} color={modelo === '' ? "#00000000" : (modelo.length > 1 ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 0 }} />
+                                    <Ionicons name={cargo.length > 1 ? "checkmark" : "close"} size={20} color={cargo === '' ? "#00000000" : (cargo.length > 1 ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 10 }} />
                                 </AreaInput>
 
-                                <AreaInput style={style.areaInput}>
-                                    <MaterialCommunityIcons name="scoreboard" size={20} color={minhasCores.color5} />
-                                    <Input
-                                        placeholder="Placa do veículo"
-                                        maxLength={7}
-                                        autoCorrect={false}
-                                        autoCapitalize="characters"
-                                        value={placa}
-                                        onChangeText={text => setPlaca(text.replace(regexAllTexts, '').toUpperCase())}
-                                    />
-                                    <Ionicons name={regexPlate.test(placa) ? "checkmark" : "close"} size={20} color={placa === '' ? '#00000000' : (regexPlate.test(placa) ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 0 }} />
-                                </AreaInput>
-
-                                <AreaInput style={style.areaInput}>
-                                    <Ionicons name="add" size={20} color={minhasCores.color5} />
-                                    <Input
-                                        placeholder="Observações"
-                                        autoCorrect={false}
-                                        autoCapitalize="sentences"
-                                        value={observacoes}
-                                        onChangeText={text => setObservacoes(text)}
-                                    />
-                                </AreaInput>
-
-                                <View style={LocalStyle.confirmPresent}>
-                                    <Text>Convidado presente? </Text>
-
-                                    <View style={LocalStyle.confirmPresentBtnArea}>
-                                        <TouchableOpacity onPress={() => { setPresente('sim') }} style={{ ...LocalStyle.confirmPresentBtn, backgroundColor: presente === 'sim' ? minhasCores.success : minhasCores.dark_soft }}>
-                                            <Text style={LocalStyle.confirmPresentBtnAreaText}>
-                                                SIM
-                                            </Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity onPress={() => { setPresente('nao') }} style={{ ...LocalStyle.confirmPresentBtn, backgroundColor: presente === 'nao' ? minhasCores.danger : minhasCores.dark_soft }}>
-                                            <Text style={LocalStyle.confirmPresentBtnAreaText}>
-                                                NÃO
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
-
+                                <View style={style.areaInputPicker}>
+                                    <Fontisto name="persons" style={{ marginRight: 10, marginLeft: 28, fontSize: 16 }} color={minhasCores.color5} />
+                                    <Picker
+                                        style={style.picker}
+                                        selectedValue={tipoConvidado}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            setTipoConvidado(itemValue)
+                                        }>
+                                        <Picker.Item label="Autoridade" value="autoridade" />
+                                        <Picker.Item label="Convidado" value="convidado" />
+                                    </Picker>
                                 </View>
+
+                                <View style={style.areaInputPicker}>
+                                    <FontAwesome name="hand-stop-o" style={{ marginRight: 10, marginLeft: 28, fontSize: 18 }} color={minhasCores.color5} />
+                                    <Picker
+                                        style={style.picker}
+                                        selectedValue={retrato}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            setRetrato(itemValue)
+                                        }>
+                                        <Picker.Item label="Autorizado - Retrato" value="simretrato" />
+                                        <Picker.Item label="Não autorizado - Retrato" value="naoretrato" />
+                                    </Picker>
+                                </View>
+
+                                <View style={style.areaInputPicker}>
+                                    <Ionicons name="newspaper-outline" style={{ marginRight: 10, marginLeft: 28, fontSize: 18 }} color={minhasCores.color5} />
+                                    <Picker
+                                        style={style.picker}
+                                        selectedValue={leitura}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            setLeitura(itemValue)
+                                        }>
+                                        <Picker.Item label="Será lido pelo S/3" value="sims3" />
+                                        <Picker.Item label="Não será lido pelo S/3" value="naos3" />
+                                    </Picker>
+                                </View>
+
+                                <AreaInput style={style.areaInput}>
+                                    <MaterialIcons name="format-list-numbered" size={22} color={minhasCores.color5} style={{ marginLeft: 5 }} />
+                                    <Input
+                                        placeholder="Antiguidade"
+                                        autoCorrect={false}
+                                        autoCapitalize="sentences"
+                                        value={antiguidade}
+                                        onChangeText={text => setAntiguidade(text)}
+                                    />
+                                    <Ionicons name={representante.length > 1 ? "checkmark" : "close"} size={20} color={representante === '' ? "#00000000" : (representante.length > 1 ? minhasCores.success : minhasCores.danger)} style={{ marginLeft: 10 }} />
+                                </AreaInput>
 
                                 {loadingUpdate ?
 
@@ -278,7 +279,7 @@ export default function Lista({ data }) {
 
                                             onPress={() => {
                                                 if (nomeCompleto != '' && cargo != '') {
-                                                    updateOnFirebase(key, nomeCompleto, cargo, modelo, representante, placa, observacoes, presente)
+                                                    updateOnFirebase(key, nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade)
                                                 } else {
                                                     alertFill()
                                                 }
