@@ -37,6 +37,7 @@ export default function handleGuests() {
                     retrato: itens.val().retrato,
                     leitura: itens.val().leitura,
                     antiguidade: itens.val().antiguidade,
+                    palanque: itens.val().palanque,
                     presente: itens.val().presente
                 }
                 guestList.push(data)

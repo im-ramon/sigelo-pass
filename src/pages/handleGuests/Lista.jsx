@@ -31,10 +31,12 @@ export default function Lista({ data }) {
     const [retrato, setRetrato] = useState(data.retrato)
     const [leitura, setLeitura] = useState(data.leitura)
     const [antiguidade, setAntiguidade] = useState(data.antiguidade)
+    const [palanque, setPalanque] = useState(data.palanque)
     const [presente, setPresente] = useState(data.presente)
 
-    const regexPlate = /^[A-Za-z]{3}([0-9]{1}[A-Za-z]{1}[0-9]{2}|[0-9]{4}$)/
-    const regexAllTexts = /[^A-Z a-z0-9]/gi
+    // const regexPlate = /^[A-Za-z]{3}([0-9]{1}[A-Za-z]{1}[0-9]{2}|[0-9]{4}$)/
+    const regexAllTexts = /[^A-Z a-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/gi
+    // const regexAllTexts = /[^A-Z a-z0-9]/gi
 
     const alertFill = () => {
         Alert.alert(
@@ -86,9 +88,9 @@ export default function Lista({ data }) {
         return HTML
     }
 
-    async function updateOnFirebase(key, nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, presente) {
+    async function updateOnFirebase(key, nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, presente, palanque) {
         setLoadingUpdate(true)
-        await firebase.database().ref('guest').child(key).update({ nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, presente })
+        await firebase.database().ref('guest').child(key).update({ nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, presente, palanque })
             .then(() => {
                 setLoadingUpdate(false)
                 setBtnCor(`${minhasCores.success}`)
@@ -130,6 +132,7 @@ export default function Lista({ data }) {
                 <Text style={LocalStyle.textSimples}>Antiguidade: <Text style={LocalStyle.textDestaque}>{data.antiguidade}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Leitura pelo S/3: <Text style={LocalStyle.textDestaque}>{data.leitura == 'sims3' ? 'Sim' : 'Não'}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Autorizado retrato: <Text style={LocalStyle.textDestaque}>{data.retrato == 'simretrato' ? 'Sim' : 'Não'}</Text></Text>
+                <Text style={LocalStyle.textSimples}>Autorizado palanque: <Text style={LocalStyle.textDestaque}>{data.palanque == 'simpalanque' ? 'Sim' : 'Não'}</Text></Text>
                 <View style={{ ...LocalStyle.textSimplesPresenteArea, backgroundColor: data.presente == 'sim' ? minhasCores.success_light : minhasCores.warning_light }}>
                     <Text style={LocalStyle.textSimplesPresente}>
                         {data.presente == 'sim' ? 'Convidado presente' : 'Convidado ainda não chegou'}
@@ -244,6 +247,19 @@ export default function Lista({ data }) {
                                     <Ionicons name="newspaper-outline" style={{ marginRight: 10, marginLeft: 28, fontSize: 18 }} color={minhasCores.color5} />
                                     <Picker
                                         style={style.picker}
+                                        selectedValue={palanque}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            setPalanque(itemValue)
+                                        }>
+                                        <Picker.Item label="Autorizado - Palanque" value="simpalanque" />
+                                        <Picker.Item label="Não autorizado - Palanque" value="naopalanque" />
+                                    </Picker>
+                                </View>
+
+                                <View style={style.areaInputPicker}>
+                                    <Ionicons name="newspaper-outline" style={{ marginRight: 10, marginLeft: 28, fontSize: 18 }} color={minhasCores.color5} />
+                                    <Picker
+                                        style={style.picker}
                                         selectedValue={leitura}
                                         onValueChange={(itemValue, itemIndex) =>
                                             setLeitura(itemValue)
@@ -299,7 +315,7 @@ export default function Lista({ data }) {
 
                                             onPress={() => {
                                                 if (nomeCompleto != '' && cargo != '') {
-                                                    updateOnFirebase(key, nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, presente)
+                                                    updateOnFirebase(key, nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, presente, palanque)
                                                 } else {
                                                     alertFill()
                                                 }

@@ -11,10 +11,10 @@ export default function GenerateGuestList() {
     const [loading, setLoading] = useState(false)
     const [guests, setGuests] = useState([])
 
-    function printHTML(allGuests) {
+    function printHTML(allGuests, tipo) {
         setLoading(true);
         Print.printAsync({
-            html: makeHTML(allGuests)
+            html: makeHTML(allGuests, tipo)
         }).then(() => {
             setLoading(false)
         })
@@ -22,12 +22,13 @@ export default function GenerateGuestList() {
 
     function compararAntiguidade(a, b) {
         return a.antiguidade - b.antiguidade;
-      }
+    }
 
-    function makeHTML(allGuests) {
-        let gustesOrd = allGuests.sort(compararAntiguidade)
-        let i = 0
-        let html = `
+    function makeHTML(allGuests, tipo) {
+        if (tipo === 's') {
+            let gustesOrd = allGuests.sort(compararAntiguidade)
+            let i = 0
+            let html = `
             <head><title>Convidados presentes</title></head><div>
                 <table style="border-collapse:collapse; width: 18cm; font-family: sans-serif;">
                     <caption style="font-size: 24px; font-weight: 600;">Convidados presentes</caption>
@@ -42,10 +43,10 @@ export default function GenerateGuestList() {
                     <tbody>`
 
 
-        allGuests.forEach((item, index) => {
-            if (item.presente === 'sim' && item.leitura == 'sims3' ) {
-                // i++;
-                html = html + `
+            allGuests.forEach((item, index) => {
+                if (item.presente === 'sim' && item.leitura == 'sims3') {
+                    // i++;
+                    html = html + `
                             <tr ${index % 2 == 0 && index !== 0 ? 'style="background: rgb(218, 218, 218);"' : ''}>
                             <td style="border: 1px solid black;padding: 2px 4px; text-align: center;">${++i}</td>
                             <td style="border: 1px solid black;padding: 2px 4px; text-align: left;">${item.nomeCompleto}</td>
@@ -53,11 +54,50 @@ export default function GenerateGuestList() {
                             <td style="border: 1px solid black;padding: 2px 4px; text-align: left;">${item.cargo}</td>
                             </tr>
                             `
-            }
-        })
+                }
+            })
 
-        const footer = `</tbody></table><div>Quatitadade presente: ${i}</div></div>`
-        return html + footer
+            const footer = `</tbody></table><div>Quatitadade presente: ${i}</div></div>`
+            return html + footer
+        }
+
+        if (tipo === 'p') {
+            let gustesOrd = allGuests.sort(compararAntiguidade)
+            let i = 0
+            let html = `
+            <head><title>Convidados presentes</title></head><div>
+                <table style="border-collapse:collapse; width: 18cm; font-family: sans-serif;">
+                    <caption style="font-size: 24px; font-weight: 600;">Convidados presentes</caption>
+                    <thead>
+                        <tr style="background: rgb(82, 192, 49);">
+                            <th style="border: 1px solid black; padding: 2px 4px; text-align: center;">Nº assento</th>
+                            <th style="border: 1px solid black; padding: 2px 4px; text-align: center;">Nome</th>
+                            <th style="border: 1px solid black; padding: 2px 4px; text-align: center;">Representado por</th>
+                            <th style="border: 1px solid black; padding: 2px 4px; text-align: center;">Cargo/ Função</th>
+                        </tr>
+                    </thead>
+                    <tbody>`
+
+
+            allGuests.forEach((item, index) => {
+                if (item.presente === 'sim' && item.palanque == 'simpalanque') {
+                    if (i == 3) { i = 6 }
+                    if (i == 4) { i = 7 }
+                    if (i == 5) { i = 8 }
+                    html = html + `
+                            <tr ${index % 2 == 0 && index !== 0 ? 'style="background: rgb(218, 218, 218);"' : ''}>
+                            <td style="border: 1px solid black;padding: 2px 4px; text-align: center;">${++i}</td>
+                            <td style="border: 1px solid black;padding: 2px 4px; text-align: left;">${item.nomeCompleto}</td>
+                            <td style="border: 1px solid black;padding: 2px 4px; text-align: left;">${item.representante}</td>
+                            <td style="border: 1px solid black;padding: 2px 4px; text-align: left;">${item.cargo}</td>
+                            </tr>
+                            `
+                }
+            })
+
+            const footer = `</tbody></table><div>Quatitadade presente: ${allGuests.length}</div></div>`
+            return html + footer
+        }
     }
 
     async function getGuests() {
@@ -75,6 +115,7 @@ export default function GenerateGuestList() {
                     retrato: itens.val().retrato,
                     leitura: itens.val().leitura,
                     antiguidade: itens.val().antiguidade,
+                    palanque: itens.val().palanque,
                     presente: itens.val().presente
                 }
                 guestList.push(data)
@@ -97,9 +138,14 @@ export default function GenerateGuestList() {
             <View style={localStyle.btnArea}>
                 {loading ? (<ActivityIndicator color={minhasCores.color3} size={45} />) :
                     (
-                        <SubmitButton onPress={() => { printHTML(guests) }}>
-                            <SubmitText>Imprimir relação de convidados</SubmitText>
-                        </SubmitButton>
+                        <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                            <SubmitButton style={{ width: '80%' }} onPress={() => { printHTML(guests, 's') }}>
+                                <SubmitText>Relação de convidados - S/3</SubmitText>
+                            </SubmitButton>
+                            <SubmitButton style={{ width: '80%' }} onPress={() => { printHTML(guests, 'p') }}>
+                                <SubmitText>Relação de convidados - Palanque</SubmitText>
+                            </SubmitButton>
+                        </View>
                     )}
             </View>
         </View>

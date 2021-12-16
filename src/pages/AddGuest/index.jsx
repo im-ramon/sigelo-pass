@@ -18,8 +18,9 @@ export default function AddGuest() {
     const [cargo, setCargo] = useState('')
     const [tipoConvidado, setTipoConvidado] = useState('autoridade')
     const [retrato, setRetrato] = useState('naoretrato')
-    const [leitura, setLeitura] = useState('sims3')
+    const [leitura, setLeitura] = useState('naos3')
     const [antiguidade, setAntiguidade] = useState('0')
+    const [palanque, setPalanque] = useState('simpalanque')
 
     const [loadingUpdate, setLoadingUpdate] = useState(false)
 
@@ -49,10 +50,11 @@ export default function AddGuest() {
                             setNomeCompleto('')
                             setRepresentante('')
                             setCargo('')
-                            setTipoConvidado('')
-                            setRetrato('')
-                            setLeitura('')
-                            setAntiguidade('')
+                            setTipoConvidado('autoridade')
+                            setRetrato('naoretrato')
+                            setLeitura('naos3')
+                            setAntiguidade('0')
+                            setPalanque('naopalanque')
                         }
                     },
                     { text: "Página inicial", onPress: () => navigation.navigate('Home') },
@@ -62,7 +64,7 @@ export default function AddGuest() {
         }
     }
 
-    async function insertNoFireBase(nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade) {
+    async function insertNoFireBase(nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, palanque) {
         let database = firebase.database().ref('guest');
         let randomKey = database.push().key
 
@@ -74,6 +76,7 @@ export default function AddGuest() {
             retrato: retrato || '-',
             leitura: leitura || '-',
             antiguidade: antiguidade || '0',
+            palanque: palanque || '-',
             presente: 'nao',
         }).then((foo) => {
             alertFunc('success')
@@ -154,6 +157,19 @@ export default function AddGuest() {
                                 <Picker.Item label="Não autorizado - Retrato" value="naoretrato" />
                             </Picker>
                         </View>
+                        
+                        <View style={style.areaInputPicker}>
+                            <FontAwesome name="hand-stop-o" style={{ marginRight: 10, marginLeft: 28, fontSize: 18 }} color={minhascores.color5} />
+                            <Picker
+                                style={style.picker}
+                                selectedValue={palanque}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setPalanque(itemValue)
+                                }>
+                                <Picker.Item label="Autorizado - Palanque" value="simpalanque" />
+                                <Picker.Item label="Não autorizado - Palanque" value="naopalanque" />
+                            </Picker>
+                        </View>
 
                         <View style={style.areaInputPicker}>
                             <Ionicons name="newspaper-outline" style={{ marginRight: 10, marginLeft: 28, fontSize: 18 }} color={minhascores.color5} />
@@ -189,7 +205,7 @@ export default function AddGuest() {
                                 <SubmitButton style={style.btnEnviar} onPress={() => {
                                     if (nomeCompleto != '' && cargo != '') {
                                         setLoadingUpdate(true)
-                                        insertNoFireBase(nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade)
+                                        insertNoFireBase(nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade, palanque)
                                     } else {
                                         alertFunc('erro')
                                     }
