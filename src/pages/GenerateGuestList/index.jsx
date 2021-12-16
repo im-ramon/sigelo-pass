@@ -20,7 +20,12 @@ export default function GenerateGuestList() {
         })
     }
 
+    function compararAntiguidade(a, b) {
+        return a.antiguidade - b.antiguidade;
+      }
+
     function makeHTML(allGuests) {
+        let gustesOrd = allGuests.sort(compararAntiguidade)
         let i = 0
         let html = `
             <head><title>Convidados presentes</title></head><div>
@@ -38,7 +43,7 @@ export default function GenerateGuestList() {
 
 
         allGuests.forEach((item, index) => {
-            if (item.presente === 'sim') {
+            if (item.presente === 'sim' && item.leitura == 'sims3' ) {
                 // i++;
                 html = html + `
                             <tr ${index % 2 == 0 && index !== 0 ? 'style="background: rgb(218, 218, 218);"' : ''}>
@@ -63,13 +68,14 @@ export default function GenerateGuestList() {
             snapshot.forEach(itens => {
                 let data = {
                     key: itens.key,
-                    cargo: itens.val().cargo,
-                    modelo: itens.val().modelo,
                     nomeCompleto: itens.val().nomeCompleto,
-                    observacoes: itens.val().observacoes,
-                    placa: itens.val().placa,
                     representante: itens.val().representante,
-                    presente: itens.val().presente,
+                    cargo: itens.val().cargo,
+                    tipoConvidado: itens.val().tipoConvidado,
+                    retrato: itens.val().retrato,
+                    leitura: itens.val().leitura,
+                    antiguidade: itens.val().antiguidade,
+                    presente: itens.val().presente
                 }
                 guestList.push(data)
             })

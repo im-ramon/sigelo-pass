@@ -122,10 +122,11 @@ export default function Lista({ data }) {
         <View style={LocalStyle.container}>
 
             <View style={LocalStyle.sectionGuestData}>
-                <Text style={LocalStyle.textSimples}>Tioo de convidado: <Text style={LocalStyle.textDestaque}>{data.tipoConvidado == 'autoridade' ? 'Autoridade' : 'Convidado'}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Nome: <Text style={LocalStyle.textDestaque}>{`${data.nomeCompleto}`}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Representado por: <Text style={LocalStyle.textDestaque}>{data.representante}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Cargo/ Função: <Text style={LocalStyle.textDestaque}>{data.cargo}</Text></Text>
+                <Text style={LocalStyle.textSimples}>---------------------------------------------------------------------</Text>
+                <Text style={LocalStyle.textSimples}>Tipo de convidado: <Text style={LocalStyle.textDestaque}>{data.tipoConvidado == 'autoridade' ? 'Autoridade' : 'Convidado'}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Antiguidade: <Text style={LocalStyle.textDestaque}>{data.antiguidade}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Leitura pelo S/3: <Text style={LocalStyle.textDestaque}>{data.leitura == 'sims3' ? 'Sim' : 'Não'}</Text></Text>
                 <Text style={LocalStyle.textSimples}>Autorizado retrato: <Text style={LocalStyle.textDestaque}>{data.retrato == 'simretrato' ? 'Sim' : 'Não'}</Text></Text>
