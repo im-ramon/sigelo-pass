@@ -5,7 +5,6 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import minhasCores from '../../styles/colors';
 import { AuthContext } from '../../contexts/auth';
-import { Picker } from '@react-native-picker/picker';
 import firebase from '../../services/firebaseConnection'
 
 export default function PassawordReset() {

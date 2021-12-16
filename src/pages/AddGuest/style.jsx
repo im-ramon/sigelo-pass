@@ -22,7 +22,26 @@ export const style = StyleSheet.create({
     areaInput: {
         width: '80%',
         flex: 1,
-        alignSelf: 'center'
+        alignSelf: 'center',
+    },
+    areaInputPicker: {
+        width: '80%',
+        flexDirection: 'row',
+        flex: 1,
+        alignSelf: 'center',
+        backgroundColor: '#00000015',
+        borderRadius: 22,
+        height: 40,
+        borderColor: '#00000030',
+        borderStyle: 'solid',
+        borderWidth: 2,
+        justifyContent: 'center',
+        alignItems : 'center',
+        marginBottom: 25
+    },
+    picker: {
+        height: 40,
+        width: '90%',
     },
     datePiker: {
         width: '80%',

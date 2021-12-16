@@ -58,21 +58,21 @@ export default function Home() {
             <View style={style.sectionMaster}>
                 <ScrollView style={style.sectionScrollView}>
                     <View style={style.section}>
-                        {(eventType === '1' || eventType === '0') && (
-                            <TouchableOpacity style={style.section_btnLarge} onPress={() => { navigation.navigate('ScannerQR') }}>
+                        {/* {(eventType === '1' || eventType === '0') && (
+                            <TouchableOpacity style={{ ...style.section_btn }} onPress={() => { navigation.navigate('ScannerQR') }}>
                                 <View style={{ ...style.icon, backgroundColor: '#e5f6fc' }}>
                                     <AntDesign name="qrcode" size={48} color={'#3fb5d2'} />
                                 </View>
                                 <Text style={style.section_btn_text}>Escanear convite</Text>
                             </TouchableOpacity>
-                        )}
+                        )} */}
 
                         {(eventType === '1' || eventType === '0') && (
                             <TouchableOpacity style={style.section_btn} onPress={() => { navigation.navigate('GenerateGuestList') }}>
                                 <View style={{ ...style.icon, backgroundColor: '#f0eaff' }}>
                                     <FontAwesome5 name="clipboard-list" size={32} color={'#5e38ea'} />
                                 </View>
-                                <Text style={style.section_btn_text}>Convidados presentes</Text>
+                                <Text style={style.section_btn_text}>Convidados para leitura</Text>
                             </TouchableOpacity>
                         )}
 

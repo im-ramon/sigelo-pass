@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Image, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { AreaInput, CabecalhoPages, Background, Container, Input, Logo, SubmitButton, SubmitText, Link, LinkText, styles } from '../../styles/styles';
-import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome, MaterialIcons, Fontisto } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { style } from './style'
 import { Picker } from '@react-native-picker/picker'
 import firebase from '../../services/firebaseConnection'
-import DateTimePicker from '@react-native-community/datetimepicker';
 import minhascores from '../../styles/colors';
 
 export default function AddGuest() {
@@ -17,9 +16,10 @@ export default function AddGuest() {
     const [nomeCompleto, setNomeCompleto] = useState('')
     const [representante, setRepresentante] = useState('')
     const [cargo, setCargo] = useState('')
-    const [modelo, setModelo] = useState('')
-    const [placa, setPlaca] = useState('')
-    const [observacoes, setObservacoes] = useState('')
+    const [tipoConvidado, setTipoConvidado] = useState('autoridade')
+    const [retrato, setRetrato] = useState('naoretrato')
+    const [leitura, setLeitura] = useState('sims3')
+    const [antiguidade, setAntiguidade] = useState('0')
 
     const [loadingUpdate, setLoadingUpdate] = useState(false)
 
@@ -49,9 +49,10 @@ export default function AddGuest() {
                             setNomeCompleto('')
                             setRepresentante('')
                             setCargo('')
-                            setModelo('')
-                            setPlaca('')
-                            setObservacoes('')
+                            setTipoConvidado('')
+                            setRetrato('')
+                            setLeitura('')
+                            setAntiguidade('')
                         }
                     },
                     { text: "Página inicial", onPress: () => navigation.navigate('Home') },
@@ -61,23 +62,24 @@ export default function AddGuest() {
         }
     }
 
-    async function insertNoFireBase(nomeCompleto, representante, cargo, modelo, placa, observacoes) {
+    async function insertNoFireBase(nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade) {
         let database = firebase.database().ref('guest');
         let randomKey = database.push().key
 
         await database.child(randomKey).set({
-            nomeCompleto: nomeCompleto || '-', 
-            representante: representante || '-', 
-            cargo: cargo || '-', 
-            modelo: modelo || '-', 
-            placa: placa || '-', 
-            observacoes: observacoes || '-',
+            nomeCompleto: nomeCompleto || '-',
+            representante: representante || '-',
+            cargo: cargo || '-',
+            tipoConvidado: tipoConvidado || '-',
+            retrato: retrato || '-',
+            leitura: leitura || '-',
+            antiguidade: antiguidade || '0',
             presente: 'nao',
         }).then((foo) => {
             alertFunc('success')
         }).catch(err => {
             alert(err)
-        }).finally(()=>{
+        }).finally(() => {
             setLoadingUpdate(false)
         })
     }
@@ -127,41 +129,57 @@ export default function AddGuest() {
                             <Ionicons name={cargo.length > 1 ? "checkmark" : "close"} size={20} color={cargo === '' ? "#00000000" : (cargo.length > 1 ? minhascores.success : minhascores.danger)} style={{ marginLeft: 10 }} />
                         </AreaInput>
 
-                        <AreaInput style={style.areaInput}>
-                            <Ionicons name="car" size={20} color={minhascores.color5} style={{ marginLeft: 5 }} />
-                            <Input
-                                placeholder="Modelo do veículo"
-                                autoCorrect={false}
-                                autoCapitalize="sentences"
-                                value={modelo}
-                                onChangeText={text => setModelo(text)}
-                            />
-                            <Ionicons name={modelo.length > 1 ? "checkmark" : "close"} size={20} color={modelo === '' ? "#00000000" : (modelo.length > 1 ? minhascores.success : minhascores.danger)} style={{ marginLeft: 10 }} />
-                        </AreaInput>
+                        <View style={style.areaInputPicker}>
+                            <Fontisto name="persons" style={{ marginRight: 10, marginLeft: 28, fontSize: 16 }} color={minhascores.color5} />
+                            <Picker
+                                style={style.picker}
+                                selectedValue={tipoConvidado}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setTipoConvidado(itemValue)
+                                }>
+                                <Picker.Item label="Autoridade" value="autoridade" />
+                                <Picker.Item label="Convidado" value="convidado" />
+                            </Picker>
+                        </View>
+
+                        <View style={style.areaInputPicker}>
+                            <FontAwesome name="hand-stop-o" style={{ marginRight: 10, marginLeft: 28, fontSize: 18 }} color={minhascores.color5} />
+                            <Picker
+                                style={style.picker}
+                                selectedValue={retrato}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setRetrato(itemValue)
+                                }>
+                                <Picker.Item label="Autorizado - Retrato" value="simretrato" />
+                                <Picker.Item label="Não autorizado - Retrato" value="naoretrato" />
+                            </Picker>
+                        </View>
+
+                        <View style={style.areaInputPicker}>
+                            <Ionicons name="newspaper-outline" style={{ marginRight: 10, marginLeft: 28, fontSize: 18 }} color={minhascores.color5} />
+                            <Picker
+                                style={style.picker}
+                                selectedValue={leitura}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setLeitura(itemValue)
+                                }>
+                                <Picker.Item label="Será lido pelo S/3" value="sims3" />
+                                <Picker.Item label="Não será lido pelo S/3" value="naos3" />
+                            </Picker>
+                        </View>
 
                         <AreaInput style={style.areaInput}>
-                            <MaterialCommunityIcons name="scoreboard" size={20} color={minhascores.color5} style={{ marginLeft: 5 }} />
+                        <MaterialIcons name="format-list-numbered" size={22} color={minhascores.color5} style={{ marginLeft: 5 }} />
                             <Input
-                                placeholder="Placa do veículo"
-                                maxLength={7}
-                                autoCorrect={false}
-                                value={placa}
-                                autoCapitalize='characters'
-                                onChangeText={text => setPlaca(text.replace(regexAllTexts, '').toUpperCase())}
-                            />
-                            <Ionicons name={regexPlate.test(placa) ? "checkmark" : "close"} size={20} color={placa === '' ? '#00000000' : (regexPlate.test(placa) ? minhascores.success : minhascores.danger)} style={{ marginLeft: 10 }} />
-                        </AreaInput>
-
-                        <AreaInput style={style.areaInput}>
-                            <Ionicons name="add" size={20} color={minhascores.color5} style={{ marginLeft: 5 }} />
-                            <Input
-                                placeholder="Observações"
+                                placeholder="Antiguidade"
                                 autoCorrect={false}
                                 autoCapitalize="sentences"
-                                value={observacoes}
-                                onChangeText={text => setObservacoes(text)}
+                                value={antiguidade}
+                                onChangeText={text => setAntiguidade(text)}
                             />
+                            <Ionicons name={representante.length > 1 ? "checkmark" : "close"} size={20} color={representante === '' ? "#00000000" : (representante.length > 1 ? minhascores.success : minhascores.danger)} style={{ marginLeft: 10 }} />
                         </AreaInput>
+
 
                         {loadingUpdate ?
 
@@ -171,7 +189,7 @@ export default function AddGuest() {
                                 <SubmitButton style={style.btnEnviar} onPress={() => {
                                     if (nomeCompleto != '' && cargo != '') {
                                         setLoadingUpdate(true)
-                                        insertNoFireBase(nomeCompleto, representante, cargo, modelo, placa, observacoes)
+                                        insertNoFireBase(nomeCompleto, representante, cargo, tipoConvidado, retrato, leitura, antiguidade)
                                     } else {
                                         alertFunc('erro')
                                     }
